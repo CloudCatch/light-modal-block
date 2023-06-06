@@ -1,0 +1,20 @@
+{
+    "editor.formatOnSave": false,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true
+    },
+    "eslint.validate": [
+        "javascript",
+        "typescript"
+    ],
+    "typescript.validate.enable": true,
+    "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+    "stylelint.enable": true,
+    "stylelint.validate": [
+        "scss"
+    ],
+    "css.validate": false,
+    "less.validate": false,
+    "scss.validate": false,
+    "stylelint.configFile": "node_modules/@wordpress/scripts/config/.stylelintrc.json"
+}

@@ -1,0 +1,63 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Check if secrets exist
+        env:
+          svn_username: ${{ secrets.SVN_USERNAME }}
+          svn_password: ${{ secrets.SVN_PASSWORD }}
+        if: ${{ (env.svn_username == '') || (env.svn_password == '') }}
+        run: exit 1
+
+      - name: Install npm packages
+        run: |
+          npm i
+
+      - name: Semantic release
+        id: semantic
+        uses: cycjimmy/semantic-release-action@v2
+        with:
+          semantic_version: 17
+          branches: | 
+            ['master']
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set env
+        if: steps.semantic.outputs.new_release_published == 'true'
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+      - name: Build release
+        if: steps.semantic.outputs.new_release_published == 'true'
+        shell: bash
+        run: |
+          npm run plugin-zip
+
+      - name: Release
+        if: steps.semantic.outputs.new_release_published == 'true'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.semantic.outputs.new_release_version }}
+          files: |
+            dist/simple-modal-block.zip
+
+      - name: WordPress Plugin Deploy
+        id: deploy
+        if: steps.semantic.outputs.new_release_published == 'true'
+        uses: 10up/action-wordpress-plugin-deploy@1.5.0
+        env:
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SLUG: simple-modal-block
+          VERSION: ${{ steps.semantic.outputs.new_release_version }}
+          BUILD_DIR: dist/simple-modal-block

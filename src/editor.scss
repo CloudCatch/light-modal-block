@@ -1,0 +1,35 @@
+.wp-block-cloudcatch-simple-modal-block {
+	max-height: calc(100% - 200px);
+
+	&__wrapper {
+
+		&.is-open {
+			z-index: 5;
+		}
+	}
+
+	&__content {
+		padding: var(--wp-admin-border-width-focus, 0);
+	}
+
+	.components-resizable-box__container.has-show-handle .components-resizable-box__handle {
+		display: none !important;
+	}
+}
+
+.simple-modal-block {
+
+	&__card {
+
+		.components-card-body {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 12px;
+		}
+
+		.components-heading {
+			margin: 0;
+		}
+	}
+}

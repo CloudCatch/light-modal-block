@@ -1,0 +1,27 @@
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/editor.scss ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+.wp-block-cloudcatch-simple-modal-block {
+  max-height: calc(100% - 200px);
+}
+.wp-block-cloudcatch-simple-modal-block__wrapper.is-open {
+  z-index: 5;
+}
+.wp-block-cloudcatch-simple-modal-block__content {
+  padding: var(--wp-admin-border-width-focus, 0);
+}
+.wp-block-cloudcatch-simple-modal-block .components-resizable-box__container.has-show-handle .components-resizable-box__handle {
+  display: none !important;
+}
+
+.simple-modal-block__card .components-card-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.simple-modal-block__card .components-heading {
+  margin: 0;
+}
+
+/*# sourceMappingURL=index.css.map*/
