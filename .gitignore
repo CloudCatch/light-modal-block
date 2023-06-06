@@ -8,8 +8,10 @@ yarn-error.log*
 # Coverage directory used by tools like istanbul
 coverage
 
-# Compiled binary addons (https://nodejs.org/api/addons.html)
-build/Release
+# Compiled assets
+build/
+package/
+dist/
 
 # Dependency directories
 node_modules/
@@ -28,3 +30,6 @@ node_modules/
 
 # dotenv environment variables file
 .env
+
+# Mac
+.DS_Store
