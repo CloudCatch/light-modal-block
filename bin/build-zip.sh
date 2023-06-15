@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PLUGIN_SLUG="simple-modal-block"
+PLUGIN_SLUG="light-modal-block"
 PROJECT_PATH="."
 BUILD_PATH="./dist"
 DEST_PATH="$BUILD_PATH/$PLUGIN_SLUG"

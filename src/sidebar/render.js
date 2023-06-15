@@ -17,7 +17,7 @@ export default function PluginSidebarTest() {
 		return select( blockEditorStore )
 			.getBlocks()
 			.filter(
-				( block ) => block.name === 'cloudcatch/simple-modal-block'
+				( block ) => block.name === 'cloudcatch/light-modal-block'
 			);
 	} );
 
@@ -26,20 +26,20 @@ export default function PluginSidebarTest() {
 	return (
 		<PluginSidebar
 			name="plugin-sidebar-test"
-			title={ __( 'Modals', 'simple-modal-block' ) }
+			title={ __( 'Modals', 'light-modal-block' ) }
 			icon={ ModalIcon }
 		>
 			<div className="plugin-sidebar-content">
 				{ modals.length > 0 &&
 					modals.map( ( modal, key ) => (
 						<div key={ key }>
-							<Card className="simple-modal-block__card">
+							<Card className="light-modal-block__card">
 								<CardBody>
 									<Heading size={ 4 }>
 										{ modal.attributes.label ||
 											__(
 												'New Modal',
-												'simple-modal-block'
+												'light-modal-block'
 											) }
 									</Heading>
 									<div>
@@ -47,7 +47,7 @@ export default function PluginSidebarTest() {
 											icon={ edit }
 											label={ __(
 												'Edit Modal',
-												'simple-modal-block'
+												'light-modal-block'
 											) }
 											onClick={ () =>
 												selectBlock( modal.clientId )
@@ -57,7 +57,7 @@ export default function PluginSidebarTest() {
 											icon={ trash }
 											label={ __(
 												'Remove Modal',
-												'simple-modal-block'
+												'light-modal-block'
 											) }
 											onClick={ () =>
 												removeBlock( modal.clientId )
@@ -74,7 +74,7 @@ export default function PluginSidebarTest() {
 							<p>
 								{ __(
 									'There are no modals on this page',
-									'simple-modal-block'
+									'light-modal-block'
 								) }
 							</p>
 						</CardBody>

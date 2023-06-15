@@ -15,12 +15,11 @@ import {
 	useSetting,
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
-import { useEffect, useRef, useState, useMemo } from '@wordpress/element';
+import { useEffect, useRef, useState } from '@wordpress/element';
 import {
 	PanelBody,
 	TextControl,
 	ToggleControl,
-	SelectControl,
 	__experimentalUseCustomUnits as useCustomUnits,
 	__experimentalUnitControl as UnitControl,
 	SVG,
@@ -33,20 +32,13 @@ import './editor.scss';
 import { generateModalId } from './utils';
 
 export function Edit( props ) {
-	const {
-		attributes,
-		setAttributes,
-		isSelected,
-		clientId,
-		noticeOperations,
-	} = props;
+	const { attributes, setAttributes, isSelected, clientId } = props;
 	const {
 		id,
 		label,
 		width,
 		backdropColor,
 		enableCloseButton,
-		triggerType,
 		triggerDelay,
 		enableTriggerDelay,
 		triggerSelector,
@@ -62,14 +54,6 @@ export function Edit( props ) {
 		},
 		[ clientId ]
 	);
-
-	const modals = useSelect( ( select ) => {
-		return select( blockEditorStore )
-			.getBlocks()
-			.filter(
-				( block ) => block.name === 'cloudcatch/simple-modal-block'
-			);
-	} );
 
 	useEffect( () => {
 		if ( ! id ) {
@@ -88,8 +72,6 @@ export function Edit( props ) {
 	const close = () => {
 		setOpen( false );
 	};
-
-	const debouncedClose = useMemo( () => debounce( close, 150 ), [] );
 
 	const units = useCustomUnits( {
 		availableUnits: useSetting( 'spacing.units' ) || [
@@ -112,7 +94,7 @@ export function Edit( props ) {
 		role: 'dialog',
 		'aria-modal': true,
 		className: classNames(
-			'wp-block-cloudcatch-simple-modal-block__wrapper',
+			'wp-block-cloudcatch-light-modal-block__wrapper',
 			{ 'is-open': open }
 		),
 		style: backdropColor ? { backgroundColor: backdropColor } : undefined,
@@ -126,15 +108,15 @@ export function Edit( props ) {
 			<InspectorControls>
 				<PanelBody>
 					<TextControl
-						label={ __( 'Modal Label', 'simple-modal-block' ) }
+						label={ __( 'Modal Label', 'light-modal-block' ) }
 						value={ label }
-						placeholder={ __( 'New Modal', 'simple-modal-block' ) }
+						placeholder={ __( 'New Modal', 'light-modal-block' ) }
 						onChange={ ( value ) =>
 							setAttributes( { label: value } )
 						}
 						help={ __(
 							'Used to differentiate modals from one another',
-							'simple-modal-block'
+							'light-modal-block'
 						) }
 					/>
 					<UnitControl
@@ -150,10 +132,7 @@ export function Edit( props ) {
 						units={ units }
 					/>
 					<ToggleControl
-						label={ __(
-							'Show Close Button',
-							'simple-modal-block'
-						) }
+						label={ __( 'Show Close Button', 'light-modal-block' ) }
 						checked={ enableCloseButton || false }
 						onChange={ () => {
 							setAttributes( {
@@ -162,11 +141,11 @@ export function Edit( props ) {
 						} }
 					/>
 				</PanelBody>
-				<PanelBody title={ __( 'Triggers', 'simple-modal-block' ) }>
+				<PanelBody title={ __( 'Triggers', 'light-modal-block' ) }>
 					<ToggleControl
 						label={ __(
 							'Show Modal on Page Load',
-							'simple-modal-block'
+							'light-modal-block'
 						) }
 						checked={ enableTriggerDelay || false }
 						onChange={ () => {
@@ -177,7 +156,7 @@ export function Edit( props ) {
 					/>
 					{ enableTriggerDelay && (
 						<UnitControl
-							label={ __( 'Delay', 'simple-modal-block' ) }
+							label={ __( 'Delay', 'light-modal-block' ) }
 							labelPosition="edge"
 							__unstableInputWidth="80px"
 							value={ triggerDelay }
@@ -198,7 +177,7 @@ export function Edit( props ) {
 						/>
 					) }
 					<TextControl
-						label={ __( 'Selector', 'simple-modal-block' ) }
+						label={ __( 'Selector', 'light-modal-block' ) }
 						value={ triggerSelector }
 						onChange={ ( val ) =>
 							setAttributes( { triggerSelector: val } )
@@ -212,12 +191,12 @@ export function Edit( props ) {
 					<div
 						{ ...useInnerBlocksProps( {
 							className:
-								'wp-block-cloudcatch-simple-modal-block__content',
+								'wp-block-cloudcatch-light-modal-block__content',
 						} ) }
 					/>
 					{ enableCloseButton && (
 						<button
-							className="wp-block-cloudcatch-simple-modal-block__close"
+							className="wp-block-cloudcatch-light-modal-block__close"
 							onClick={ close }
 						>
 							<SVG

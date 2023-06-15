@@ -1,10 +1,10 @@
-.wp-block-cloudcatch-simple-modal-block {
+.wp-block-cloudcatch-light-modal-block {
 	max-height: calc(100% - 200px);
 
 	&__wrapper {
 
 		&.is-open {
-			z-index: 5;
+			z-index: 10;
 		}
 	}
 
@@ -17,7 +17,7 @@
 	}
 }
 
-.simple-modal-block {
+.light-modal-block {
 
 	&__card {
 

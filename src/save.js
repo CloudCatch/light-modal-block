@@ -10,7 +10,6 @@ export default function save( props ) {
 		width,
 		backdropColor,
 		enableCloseButton,
-		triggerType,
 		triggerDelay,
 		enableTriggerDelay,
 		triggerSelector,
@@ -26,7 +25,7 @@ export default function save( props ) {
 		role: 'dialog',
 		'aria-modal': true,
 		className: classNames(
-			'wp-block-cloudcatch-simple-modal-block__wrapper'
+			'wp-block-cloudcatch-light-modal-block__wrapper'
 		),
 		style: backdropColor ? { backgroundColor: backdropColor } : undefined,
 		'data-trigger-delay': enableTriggerDelay ? triggerDelay : undefined,
@@ -40,11 +39,11 @@ export default function save( props ) {
 				<div
 					{ ...useInnerBlocksProps.save( {
 						className:
-							'wp-block-cloudcatch-simple-modal-block__content',
+							'wp-block-cloudcatch-light-modal-block__content',
 					} ) }
 				/>
 				{ enableCloseButton && (
-					<button className="wp-block-cloudcatch-simple-modal-block__close">
+					<button className="wp-block-cloudcatch-light-modal-block__close">
 						<SVG
 							xmlns="http://www.w3.org/2000/svg"
 							width="14"

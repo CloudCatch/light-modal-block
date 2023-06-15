@@ -9,7 +9,7 @@ module.exports = {
             {
                 "files": [
                     "package.json",
-                    "simple-modal-block.php",
+                    "light-modal-block.php",
                     "readme.txt",
                     "src/block.json"
                 ],

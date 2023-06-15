@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       Simple Modal Block
+ * Plugin Name:       Light Modal Block
  * Description:       Lightweight, customizable modal block for the WordPress block editor
  * Requires at least: 6.1
  * Requires PHP:      7.0
@@ -8,19 +8,12 @@
  * Author:            CloudCatch LLC
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       simple-modal-block
+ * Text Domain:       light-modal-block
  *
- * @package           cloudcatch
+ * @package           CloudCatch\LightModalBlock
  */
 
-/**
- * Registers the block using the metadata loaded from the `block.json` file.
- * Behind the scenes, it registers also all assets so they can be enqueued
- * through the block editor in the corresponding context.
- *
- * @see https://developer.wordpress.org/reference/functions/register_block_type/
- */
-function cloudcatch_simple_modal_block_block_init() {
+function cloudcatch_light_modal_block_block_init() {
 	register_block_type( __DIR__ . '/build' );
 }
-add_action( 'init', 'cloudcatch_simple_modal_block_block_init' );
+add_action( 'init', 'cloudcatch_light_modal_block_block_init' );

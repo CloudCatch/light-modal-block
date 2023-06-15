@@ -1,9 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 2,
-	"name": "cloudcatch/simple-modal-block",
+	"name": "cloudcatch/light-modal-block",
 	"version": "0.0.0-development",
-	"title": "Simple Modal Block",
+	"title": "Light Modal Block",
 	"category": "widgets",
 	"description": "Lightweight, customizable modal block for the WordPress block editor",
 	"attributes": {
@@ -72,7 +72,7 @@
 			}
 		}
 	},
-	"textdomain": "simple-modal-block",
+	"textdomain": "light-modal-block",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",

@@ -1,5 +1,5 @@
 {
-	"name": "simple-modal-block",
+	"name": "light-modal-block",
 	"version": "0.0.0-development",
 	"description": "Lightweight, customizable modal block for the WordPress block editor",
 	"author": "The WordPress Contributors",
@@ -7,10 +7,10 @@
 	"main": "build/index.js",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/cloudcatch/simple-modal-block.git"
+		"url": "https://github.com/cloudcatch/light-modal-block.git"
 	},
 	"bugs": {
-		"url": "https://github.com/cloudcatch/simple-modal-block/issues",
+		"url": "https://github.com/cloudcatch/light-modal-block/issues",
 		"email": "david@cloudcatch.io"
 	},
 	"scripts": {

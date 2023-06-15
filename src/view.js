@@ -18,7 +18,7 @@ window.addEventListener( 'DOMContentLoaded', () => {
 	};
 
 	const modals = document.querySelectorAll(
-		'.wp-block-cloudcatch-simple-modal-block__wrapper'
+		'.wp-block-cloudcatch-light-modal-block__wrapper'
 	);
 
 	modals.forEach( ( modal ) => {

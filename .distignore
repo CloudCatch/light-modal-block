@@ -52,7 +52,7 @@ phpcs.xml
 phpunit.xml
 phpunit.xml.dist
 postcss.config.js
-simple-modal-block.zip
+light-modal-block.zip
 stylelint.config.js
 themeclaim.json
 tsconfig.json

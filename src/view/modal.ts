@@ -3,7 +3,7 @@ export default class Modal {
 
 	openTrigger: string = 'data-trigger-modal';
 
-	closeTrigger: string = 'wp-block-cloudcatch-simple-modal-block__close';
+	closeTrigger: string = 'wp-block-cloudcatch-light-modal-block__close';
 
 	openClass: string = 'is-open';
 
@@ -80,7 +80,7 @@ export default class Modal {
 			event.target.classList.contains( this.closeTrigger ) ||
 			event.target.parentNode.classList.contains( this.closeTrigger ) ||
 			event.target.classList.contains(
-				'wp-block-cloudcatch-simple-modal-block__wrapper'
+				'wp-block-cloudcatch-light-modal-block__wrapper'
 			)
 		) {
 			event.preventDefault();

@@ -13,17 +13,29 @@ import {
 	Button,
 } from '@wordpress/components';
 
+const ALLOWED_BLOCKS = [
+	'core/button',
+	'core/image',
+	'core/heading',
+	'core/group',
+];
+
 const addAttributes = ( settings, name ) => {
-	settings.attributes = {
-		...settings.attributes,
-		modalTriggerEnabled: {
-			type: 'boolean',
-			default: false,
-		},
-		modalEnabled: {
-			type: 'string',
-		},
-	};
+	if (
+		settings?.attributes !== undefined &&
+		ALLOWED_BLOCKS.includes( name )
+	) {
+		settings.attributes = {
+			...settings.attributes,
+			modalTriggerEnabled: {
+				type: 'boolean',
+				default: false,
+			},
+			modalEnabled: {
+				type: 'string',
+			},
+		};
+	}
 
 	return settings;
 };
@@ -36,7 +48,7 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
 			return select( blockEditorStore )
 				.getBlocks()
 				.filter(
-					( block ) => block.name === 'cloudcatch/simple-modal-block'
+					( block ) => block.name === 'cloudcatch/light-modal-block'
 				);
 		} );
 
@@ -47,28 +59,32 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
 		const { selectBlock } = useDispatch( blockEditorStore );
 
 		const modalOptions = [
-			{ label: __( 'Select Modal', 'simple-modal-block' ), value: '' },
+			{ label: __( 'Select Modal', 'light-modal-block' ), value: '' },
 			...modals.map( ( modal ) => {
 				return {
 					label:
 						modal?.attributes?.label ||
-						__( 'New Modal', 'simple-modal-block' ),
+						__( 'New Modal', 'light-modal-block' ),
 					value: modal?.attributes?.id,
 					// value: modal?.clientId,
 				};
 			} ),
 		];
 
+		if ( ! ALLOWED_BLOCKS.includes( name ) ) {
+			return <BlockEdit { ...props } />;
+		}
+
 		return (
 			<>
 				<BlockEdit { ...props } />
-				{ name !== 'cloudcatch/simple-modal-block' && (
+				{ name !== 'cloudcatch/light-modal-block' && (
 					<InspectorAdvancedControls>
 						<BaseControl>
 							<ToggleControl
 								label={ __(
 									'Show Modal on Click',
-									'simple-modal-block'
+									'light-modal-block'
 								) }
 								checked={
 									attributes?.modalTriggerEnabled || false
@@ -84,10 +100,7 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
 							/>
 							{ attributes?.modalTriggerEnabled && (
 								<SelectControl
-									label={ __(
-										'Modal',
-										'simple-modal-block'
-									) }
+									label={ __( 'Modal', 'light-modal-block' ) }
 									value={ attributes?.modalEnabled }
 									options={ modalOptions }
 									onChange={ ( val ) => {
@@ -101,14 +114,14 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
 								<Button
 									label={ __(
 										'Edit Modal',
-										'simple-modal-block'
+										'light-modal-block'
 									) }
 									variant="secondary"
 									onClick={ () =>
 										selectBlock( selectedModal.clientId )
 									}
 								>
-									{ __( 'Open Modal', 'simple-modal-block' ) }
+									{ __( 'Open Modal', 'light-modal-block' ) }
 								</Button>
 							) }
 						</BaseControl>
@@ -134,18 +147,18 @@ const applyAttributes = ( extraProps, blockType, attributes ) => {
 
 addFilter(
 	'blocks.registerBlockType',
-	'cloudcatch/SimpleModalBlockAttributes',
+	'cloudcatch/LightModalBlockAttributes',
 	addAttributes
 );
 
 addFilter(
 	'editor.BlockEdit',
-	'cloudcatch/SimpleModalBlockAdvancedControls',
+	'cloudcatch/LightModalBlockAdvancedControls',
 	withAdvancedControls
 );
 
 addFilter(
 	'blocks.getSaveContent.extraProps',
-	'cloudcatch/SimpleModalBlockAttributes',
+	'cloudcatch/LightModalBlockAttributes',
 	applyAttributes
 );

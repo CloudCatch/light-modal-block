@@ -49,7 +49,7 @@ jobs:
         with:
           tag_name: ${{ steps.semantic.outputs.new_release_version }}
           files: |
-            dist/simple-modal-block.zip
+            dist/light-modal-block.zip
 
       - name: WordPress Plugin Deploy
         id: deploy
@@ -58,6 +58,6 @@ jobs:
         env:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-          SLUG: simple-modal-block
+          SLUG: light-modal-block
           VERSION: ${{ steps.semantic.outputs.new_release_version }}
-          BUILD_DIR: dist/simple-modal-block
+          BUILD_DIR: dist/light-modal-block
