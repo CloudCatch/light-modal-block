@@ -29,6 +29,10 @@ The Light Modal block uses a modified version of the [Micromodal](https://github
 
 == Changelog ==
 
+= 1.0.1 =
+
+* Fix: Update CSS styling
+
 = 1.0.0 =
 
 * Initial release
