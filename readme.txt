@@ -15,6 +15,8 @@ Lightweight, customizable modal block for the WordPress block editor
 
 A simple yet robust solution for creating modals within the WordPress block editor.
 
+[🚀 View Demo](https://light-modal-block.cloudcatch.io/)
+
 == Features ==
 * Fully customizable using the native block editor style controls
 * Trigger modal on click for any element via CSS selector
@@ -22,6 +24,7 @@ A simple yet robust solution for creating modals within the WordPress block edit
 * Custom modal width
 * Optional close button
 * Only 1kb gzipped on frontend
+* Accessibility enabled
 
 == Attribution ==
 
