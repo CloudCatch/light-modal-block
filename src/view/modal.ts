@@ -1,5 +1,12 @@
+/**
+ * External dependencies
+ */
+import Cookies from 'js-cookie';
+
 export default class Modal {
 	modal: HTMLElement;
+
+	modalId: string;
 
 	openTrigger: string = 'data-trigger-modal';
 
@@ -7,19 +14,28 @@ export default class Modal {
 
 	openClass: string = 'is-open';
 
+	cookieDuration: number = 0;
+
 	activeElement: Element;
 
 	focusableElements: string =
 		'a[href],area[href],input:not([disabled]):not([type="hidden"]):not([aria-hidden]),select:not([disabled]):not([aria-hidden]),textarea:not([disabled]):not([aria-hidden]),button:not([disabled]):not([aria-hidden]),iframe,object,embed,[contenteditable],[tabindex]:not([tabindex^="-"])';
 
-	constructor( { targetModal, triggers = [] } ) {
+	constructor( { targetModal, triggers = [], cookieDuration } ) {
+		this.modalId = targetModal;
+		this.cookieDuration = cookieDuration;
+
 		// Save a reference of the modal
 		this.modal = document.querySelector(
-			`[data-modal-id="${ targetModal }"]`
+			`[data-modal-id="${ this.modalId }"]`
 		);
 
 		// Register click events only if pre binding eventListeners
 		if ( triggers.length > 0 ) this.registerTriggers( ...triggers );
+
+		this.modal.removeAttribute( 'data-trigger-delay' );
+		this.modal.removeAttribute( 'data-trigger-selector' );
+		this.modal.removeAttribute( 'data-cookie-duration' );
 
 		// pre bind functions for event listeners
 		this.onClick = this.onClick.bind( this );
@@ -35,19 +51,36 @@ export default class Modal {
 	registerTriggers( ...triggers ) {
 		triggers.filter( Boolean ).forEach( ( trigger ) => {
 			trigger.addEventListener( 'click', ( event ) =>
-				this.showModal( event )
+				this.showModal( true )
 			);
 		} );
 	}
 
-	showModal( event = null ) {
+	setCookie() {
+		const exp = new Date(
+			new Date().getTime() + this.cookieDuration * 60 * 1000
+		);
+		Cookies.set( 'wordpress_lmb_' + this.modalId, '1', {
+			expires: exp,
+		} );
+	}
+
+	getCookie() {
+		return Cookies.get( 'wordpress_lmb_' + this.modalId );
+	}
+
+	showModal( force: boolean = false ) {
+		if ( this.cookieDuration && this.getCookie() && false === force ) {
+			return;
+		}
+
 		this.activeElement = document.activeElement;
 		this.modal.classList.add( this.openClass );
 		this.addEventListeners();
 		this.setFocusToFirstNode();
 	}
 
-	closeModal( event = null ) {
+	closeModal() {
 		const modal = this.modal;
 		this.removeEventListeners();
 
@@ -56,11 +89,10 @@ export default class Modal {
 		}
 
 		modal.classList.remove( this.openClass );
-	}
 
-	closeModalById( targetModal ) {
-		this.modal = document.getElementById( targetModal );
-		if ( this.modal ) this.closeModal();
+		if ( this.cookieDuration ) {
+			this.setCookie();
+		}
 	}
 
 	addEventListeners() {

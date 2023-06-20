@@ -36,6 +36,9 @@
 		},
 		"triggerSelector": {
 			"type": "string"
+		},
+		"cookieDuration": {
+			"type": "string"
 		}
 	},
 	"supports": {

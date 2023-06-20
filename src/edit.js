@@ -2,7 +2,6 @@
  * External dependencies
  */
 import classNames from 'classnames';
-import { debounce } from 'lodash';
 
 /**
  * WordPress dependencies
@@ -12,6 +11,8 @@ import {
 	useBlockProps,
 	useInnerBlocksProps,
 	InspectorControls,
+	__experimentalColorGradientSettingsDropdown as ColorGradientSettingsDropdown,
+	__experimentalUseMultipleOriginColorsAndGradients as useMultipleOriginColorsAndGradients,
 	useSetting,
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
@@ -42,7 +43,11 @@ export function Edit( props ) {
 		triggerDelay,
 		enableTriggerDelay,
 		triggerSelector,
+		cookieDuration,
 	} = attributes;
+
+	const colorGradientSettings = useMultipleOriginColorsAndGradients();
+
 	const ref = useRef( null );
 	const [ open, setOpen ] = useState( false );
 
@@ -95,11 +100,14 @@ export function Edit( props ) {
 		'aria-modal': true,
 		className: classNames(
 			'wp-block-cloudcatch-light-modal-block__wrapper',
-			{ 'is-open': open }
+			{
+				'is-open': open,
+			}
 		),
 		style: backdropColor ? { backgroundColor: backdropColor } : undefined,
 		'data-trigger-delay': enableTriggerDelay ? triggerDelay : undefined,
 		'data-trigger-selector': triggerSelector || undefined,
+		'data-cookie-duration': cookieDuration || undefined,
 		'data-modal-id': id,
 	};
 
@@ -107,6 +115,11 @@ export function Edit( props ) {
 		<>
 			<InspectorControls>
 				<PanelBody>
+					<p className="wp-block-cloudcatch-light-modal-block__editor-id">
+						{ __( 'Modal ID', 'light-modal-block' ) }
+						{ ': ' }
+						<code>{ id }</code>
+					</p>
 					<TextControl
 						label={ __( 'Modal Label', 'light-modal-block' ) }
 						value={ label }
@@ -132,7 +145,7 @@ export function Edit( props ) {
 						units={ units }
 					/>
 					<ToggleControl
-						label={ __( 'Show Close Button', 'light-modal-block' ) }
+						label={ __( 'Show close button', 'light-modal-block' ) }
 						checked={ enableCloseButton || false }
 						onChange={ () => {
 							setAttributes( {
@@ -144,7 +157,7 @@ export function Edit( props ) {
 				<PanelBody title={ __( 'Triggers', 'light-modal-block' ) }>
 					<ToggleControl
 						label={ __(
-							'Show Modal on Page Load',
+							'Show modal on page load',
 							'light-modal-block'
 						) }
 						checked={ enableTriggerDelay || false }
@@ -155,26 +168,55 @@ export function Edit( props ) {
 						} }
 					/>
 					{ enableTriggerDelay && (
-						<UnitControl
-							label={ __( 'Delay', 'light-modal-block' ) }
-							labelPosition="edge"
-							__unstableInputWidth="80px"
-							value={ triggerDelay }
-							placeholder="0"
-							onChange={ ( val ) =>
-								setAttributes( { triggerDelay: val } )
-							}
-							unit="ms"
-							units={ {
-								ms: {
-									value: 'ms',
-									label: 'ms',
-									default: '',
-									a11yLabel: __( 'Milliseconds (ms)' ),
-									step: 1,
-								},
-							} }
-						/>
+						<>
+							<UnitControl
+								label={ __( 'Delay', 'light-modal-block' ) }
+								labelPosition="edge"
+								__unstableInputWidth="80px"
+								value={ triggerDelay }
+								placeholder="0"
+								onChange={ ( val ) =>
+									setAttributes( { triggerDelay: val } )
+								}
+								unit="ms"
+								units={ {
+									ms: {
+										value: 'ms',
+										label: 'ms',
+										default: '',
+										a11yLabel: __( 'Milliseconds (ms)' ),
+										step: 1,
+									},
+								} }
+							/>
+							<UnitControl
+								label={ __(
+									'Cookie duration',
+									'light-modal-block'
+								) }
+								labelPosition="edge"
+								__unstableInputWidth="80px"
+								value={ cookieDuration }
+								help={ __(
+									'Duration in minutes before this modal will appear again after being closed. Leave blank to always show this modal.',
+									'light-modal-block'
+								) }
+								placeholder="0"
+								onChange={ ( val ) =>
+									setAttributes( { cookieDuration: val } )
+								}
+								unit="min"
+								units={ {
+									ms: {
+										value: 'min',
+										label: 'min',
+										default: '',
+										a11yLabel: __( 'Minutes (min)' ),
+										step: 1,
+									},
+								} }
+							/>
+						</>
 					) }
 					<TextControl
 						label={ __( 'Selector', 'light-modal-block' ) }
@@ -185,6 +227,26 @@ export function Edit( props ) {
 						style={ { fontFamily: 'monospace' } }
 					/>
 				</PanelBody>
+			</InspectorControls>
+			<InspectorControls group="color">
+				<ColorGradientSettingsDropdown
+					__experimentalIsRenderedInSidebar
+					settings={ [
+						{
+							colorValue: backdropColor,
+							label: __( 'Backdrop', 'light-modal-block' ),
+							onColorChange: ( val ) =>
+								setAttributes( { backdropColor: val } ),
+							isShownByDefault: true,
+							enableAlpha: true,
+							resetAllFilter: () => ( {
+								backdropColor: undefined,
+							} ),
+						},
+					] }
+					panelId={ clientId }
+					{ ...colorGradientSettings }
+				/>
 			</InspectorControls>
 			<div { ...wrapperBlockProps }>
 				<div { ...blockProps }>

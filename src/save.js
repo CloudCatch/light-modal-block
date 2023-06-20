@@ -13,6 +13,7 @@ export default function save( props ) {
 		triggerDelay,
 		enableTriggerDelay,
 		triggerSelector,
+		cookieDuration,
 	} = attributes;
 
 	const widthWithUnit = Number.isFinite( width ) ? width + '%' : width;
@@ -30,6 +31,7 @@ export default function save( props ) {
 		style: backdropColor ? { backgroundColor: backdropColor } : undefined,
 		'data-trigger-delay': enableTriggerDelay ? triggerDelay : undefined,
 		'data-trigger-selector': triggerSelector || undefined,
+		'data-cookie-duration': cookieDuration || undefined,
 		'data-modal-id': id,
 	};
 

@@ -1,21 +1,12 @@
+/**
+ * Internal dependencies
+ */
 import Modal from './view/modal';
 
 window.addEventListener( 'DOMContentLoaded', () => {
 	'use strict';
 
-	const generateTriggerMap = ( triggers, triggerAttr ) => {
-		const triggerMap = [];
-
-		triggers.forEach( ( trigger ) => {
-			const targetModal = trigger.attributes[ triggerAttr ].value;
-			if ( triggerMap[ targetModal ] === undefined )
-				triggerMap[ targetModal ] = [];
-			triggerMap[ targetModal ].push( trigger );
-			// trigger.removeAttribute( 'data-trigger-modal' );
-		} );
-
-		return triggerMap;
-	};
+	window.lightModalBlocks = new Map();
 
 	const modals = document.querySelectorAll(
 		'.wp-block-cloudcatch-light-modal-block__wrapper'
@@ -27,6 +18,8 @@ window.addEventListener( 'DOMContentLoaded', () => {
 		const modalDelay = parseInt(
 			modal.getAttribute( 'data-trigger-delay' )
 		);
+		const modalCookieDuration =
+			parseInt( modal.getAttribute( 'data-cookie-duration' ) ) || 0;
 
 		const options = Object.assign(
 			{},
@@ -42,11 +35,15 @@ window.addEventListener( 'DOMContentLoaded', () => {
 
 		options.targetModal = modalId;
 		options.triggers = triggers;
+		options.cookieDuration = modalCookieDuration;
 
-		const init = new Modal( options );
+		window.lightModalBlocks.set( modalId, new Modal( options ) );
 
-		if ( modalDelay ) {
-			setTimeout( () => init.showModal(), modalDelay );
+		if ( null !== modalDelay && ! isNaN( modalDelay ) ) {
+			setTimeout(
+				() => window.lightModalBlocks.get( modalId ).showModal(),
+				modalDelay
+			);
 		}
 	} );
 } );

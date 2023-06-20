@@ -15,6 +15,14 @@
 	.components-resizable-box__container.has-show-handle .components-resizable-box__handle {
 		display: none !important;
 	}
+
+	&__editor-id {
+		margin-bottom: 2em;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+	}
 }
 
 .light-modal-block {

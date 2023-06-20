@@ -15,15 +15,17 @@ Lightweight, customizable modal block for the WordPress block editor
 
 A simple yet robust solution for creating modals within the WordPress block editor.
 
-[🚀 View Demo](https://light-modal-block.cloudcatch.io/)
+🚀 [View Demo](https://light-modal-block.cloudcatch.io/)
 
 == Features ==
 * Fully customizable using the native block editor style controls
 * Trigger modal on click for any element via CSS selector
 * Trigger modal on page load after X milliseconds
+  * Set cookie to not show modal again on page load until X minutes have elapsed
 * Custom modal width
 * Optional close button
-* Only 1kb gzipped on frontend
+* API enabled
+* Only 2kb gzipped
 * Accessibility enabled
 
 == Attribution ==
@@ -31,6 +33,12 @@ A simple yet robust solution for creating modals within the WordPress block edit
 The Light Modal block uses a modified version of the [Micromodal](https://github.com/Ghosh/micromodal) library.
 
 == Changelog ==
+
+= 1.1.0 =
+
+* Fix: Add backdrop color control
+* Enhancement: Set cookie to not display modal again until X minutes have elapsed
+* Enhancement: API to programatically open and close modal
 
 = 1.0.1 =
 
@@ -44,6 +52,24 @@ The Light Modal block uses a modified version of the [Micromodal](https://github
 
 1. Upload the plugin files to the `/wp-content/plugins/light-modal-block` directory, or install the plugin through the WordPress plugins screen directly.
 1. Activate the plugin through the 'Plugins' screen in WordPress
+
+== Frequently Asked Questions ==
+
+= How can I programatically open or close a modal? =
+
+Each modal is given a unique ID, which can be found inside the inspector controls of the block settings. It will look something like: `Mk6I8L4haJB`
+
+To open a modal:
+
+```javascript
+window.lightModalBlocks.get('modal-id-here').showModal(true);
+```
+
+To close a modal:
+
+```javascript
+window.lightModalBlocks.get('modal-id-here').closeModal();
+```
 
 == Screenshots ==
 
