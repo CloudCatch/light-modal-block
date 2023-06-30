@@ -9,7 +9,7 @@ import { registerBlockType } from '@wordpress/blocks';
 import Edit from './edit';
 import save from './save';
 import metadata from './block.json';
-import { ModalIcon } from './icon';
+import { modalIcon as icon } from './icon';
 
 import './style.scss';
 
@@ -19,5 +19,5 @@ import './advanced-controls';
 registerBlockType( metadata.name, {
 	edit: Edit,
 	save,
-	icon: ModalIcon(),
+	icon,
 } );

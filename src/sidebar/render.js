@@ -10,7 +10,7 @@ import {
 } from '@wordpress/components';
 import { edit, trash } from '@wordpress/icons';
 
-import { ModalIcon } from '../icon';
+import { modalIcon as icon } from '../icon';
 
 export default function PluginSidebarTest() {
 	const modals = useSelect( ( select ) => {
@@ -27,7 +27,7 @@ export default function PluginSidebarTest() {
 		<PluginSidebar
 			name="plugin-sidebar-test"
 			title={ __( 'Modals', 'light-modal-block' ) }
-			icon={ ModalIcon }
+			icon={ icon }
 		>
 			<div className="plugin-sidebar-content">
 				{ modals.length > 0 &&
