@@ -62,6 +62,17 @@
 				"padding": true
 			}
 		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalFontWeight": true,
+			"__experimentalTextTransform": true,
+			"__experimentalFontFamily": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
+		},
 		"__experimentalBorder": {
 			"color": true,
 			"radius": true,
