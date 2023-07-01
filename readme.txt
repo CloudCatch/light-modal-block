@@ -34,6 +34,10 @@ The Light Modal block uses a modified version of the [Micromodal](https://github
 
 == Changelog ==
 
+= 1.2.0 =
+
+* Enhancement: Add typography style controls
+
 = 1.1.1 =
 
 * Fix: Block editor toolbar crash
