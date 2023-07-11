@@ -8,17 +8,36 @@ import {
 	CardBody,
 	__experimentalHeading as Heading,
 } from '@wordpress/components';
-import { edit, trash } from '@wordpress/icons';
+import { edit, search, trash } from '@wordpress/icons';
 
 import { modalIcon as icon } from '../icon';
 
 export default function PluginSidebarTest() {
 	const modals = useSelect( ( select ) => {
-		return select( blockEditorStore )
-			.getBlocks()
-			.filter(
-				( block ) => block.name === 'cloudcatch/light-modal-block'
-			);
+		const data = [];
+		const blocks = select( blockEditorStore ).getBlocks();
+
+		const searchNestedBlocks = ( block ) => {
+			if ( block?.innerBlocks ) {
+				block.innerBlocks.forEach( ( innerBlock ) => {
+					if ( innerBlock.name === 'cloudcatch/light-modal-block' ) {
+						data.push( innerBlock );
+					}
+
+					searchNestedBlocks( innerBlock );
+				} );
+			}
+		};
+
+		blocks.forEach( ( block ) => {
+			if ( block.name === 'cloudcatch/light-modal-block' ) {
+				data.push( block );
+			}
+
+			searchNestedBlocks( block );
+		} );
+
+		return data;
 	} );
 
 	const { selectBlock, removeBlock } = useDispatch( blockEditorStore );

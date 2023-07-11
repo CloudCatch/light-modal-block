@@ -45,11 +45,32 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
 		const { name, attributes, setAttributes } = props;
 
 		const modals = useSelect( ( select ) => {
-			return select( blockEditorStore )
-				.getBlocks()
-				.filter(
-					( block ) => block.name === 'cloudcatch/light-modal-block'
-				);
+			const data = [];
+			const blocks = select( blockEditorStore ).getBlocks();
+
+			const searchNestedBlocks = ( block ) => {
+				if ( block?.innerBlocks ) {
+					block.innerBlocks.forEach( ( innerBlock ) => {
+						if (
+							innerBlock.name === 'cloudcatch/light-modal-block'
+						) {
+							data.push( innerBlock );
+						}
+
+						searchNestedBlocks( innerBlock );
+					} );
+				}
+			};
+
+			blocks.forEach( ( block ) => {
+				if ( block.name === 'cloudcatch/light-modal-block' ) {
+					data.push( block );
+				}
+
+				searchNestedBlocks( block );
+			} );
+
+			return data;
 		} );
 
 		const selectedModal = modals.filter(
