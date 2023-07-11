@@ -34,6 +34,10 @@ The Light Modal block uses a modified version of the [Micromodal](https://github
 
 == Changelog ==
 
+= 1.2.1=
+
+* Fix: Modal blocks not showing in sidebar or advanced controls if a nested block
+
 = 1.2.0 =
 
 * Enhancement: Add typography style controls
