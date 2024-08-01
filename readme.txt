@@ -1,7 +1,7 @@
 === Light Modal Block ===
 Contributors:      cloudcatch, dkjensen
 Tags:              block, modal, popup, lightbox, gutenberg, full-site-editing
-Tested up to:      6.4.1
+Tested up to:      6.6.1
 Stable tag:        0.0.0-development
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -34,7 +34,11 @@ The Light Modal block uses a modified version of the [Micromodal](https://github
 
 == Changelog ==
 
-= 1.2.1=
+= 1.3.0 =
+
+* Enhancement: Add support for drop shadows
+
+= 1.2.1 =
 
 * Fix: Modal blocks not showing in sidebar or advanced controls if a nested block
 
@@ -73,15 +77,11 @@ Each modal is given a unique ID, which can be found inside the inspector control
 
 To open a modal:
 
-```javascript
-window.lightModalBlocks.get('modal-id-here').showModal(true);
-```
+    window.lightModalBlocks.get('modal-id-here').showModal(true);
 
 To close a modal:
 
-```javascript
-window.lightModalBlocks.get('modal-id-here').closeModal();
-```
+    window.lightModalBlocks.get('modal-id-here').closeModal();
 
 == Screenshots ==
 
