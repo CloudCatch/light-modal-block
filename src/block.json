@@ -84,7 +84,8 @@
 				"style": true,
 				"width": true
 			}
-		}
+		},
+		"shadow": true
 	},
 	"textdomain": "light-modal-block",
 	"editorScript": "file:./index.js",
