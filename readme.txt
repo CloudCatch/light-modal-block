@@ -34,6 +34,10 @@ The Light Modal block uses a modified version of the [Micromodal](https://github
 
 == Changelog ==
 
+= 1.3.1 =
+
+* Fix: When editing a pattern with a modal block, open modal by default
+
 = 1.3.0 =
 
 * Enhancement: Add support for drop shadows

@@ -28,6 +28,7 @@ import {
 	withNotices,
 } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
+import { store as editorStore } from '@wordpress/editor';
 
 import './editor.scss';
 import { generateModalId } from './utils';
@@ -45,8 +46,15 @@ export function Edit( props ) {
 		triggerSelector,
 		cookieDuration,
 	} = attributes;
+	const [ alreadyOpenedDefault, setAlreadyOpenedDefault ] = useState( false );
 
 	const colorGradientSettings = useMultipleOriginColorsAndGradients();
+
+	const postType = useSelect( ( select ) => {
+		const { getCurrentPostType } = select( editorStore );
+
+		return getCurrentPostType();
+	}, [] );
 
 	const ref = useRef( null );
 	const [ open, setOpen ] = useState( false );
@@ -69,10 +77,14 @@ export function Edit( props ) {
 	useEffect( () => {
 		if ( isSelected || isInnerBlockSelected ) {
 			setOpen( true );
+		} else if ( 'wp_block' === postType && ! alreadyOpenedDefault ) {
+			setAlreadyOpenedDefault( true );
+			setOpen( true );
 		} else {
 			setOpen( false );
 		}
-	}, [ isSelected, isInnerBlockSelected ] );
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [ isSelected, isInnerBlockSelected, postType ] );
 
 	const close = () => {
 		setOpen( false );

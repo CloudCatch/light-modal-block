@@ -23,8 +23,8 @@
 		"start": "wp-scripts start"
 	},
 	"devDependencies": {
-		"@wordpress/icons": "^9.25.0",
-		"@wordpress/scripts": "^26.5.0",
+		"@wordpress/icons": "^10.5.0",
+		"@wordpress/scripts": "^28.5.0",
 		"classnames": "^2.3.2",
 		"lodash": "^4.17.21",
 		"nanoid": "^4.0.2",
