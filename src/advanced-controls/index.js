@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { addFilter } from '@wordpress/hooks';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { createHigherOrderComponent } from '@wordpress/compose';
 import {
 	InspectorAdvancedControls,
@@ -12,6 +12,7 @@ import {
 	SelectControl,
 	Button,
 } from '@wordpress/components';
+import { useModals } from '../utils';
 
 const ALLOWED_BLOCKS = [
 	'core/button',
@@ -44,34 +45,7 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
 	return ( props ) => {
 		const { name, attributes, setAttributes } = props;
 
-		const modals = useSelect( ( select ) => {
-			const data = [];
-			const blocks = select( blockEditorStore ).getBlocks();
-
-			const searchNestedBlocks = ( block ) => {
-				if ( block?.innerBlocks ) {
-					block.innerBlocks.forEach( ( innerBlock ) => {
-						if (
-							innerBlock.name === 'cloudcatch/light-modal-block'
-						) {
-							data.push( innerBlock );
-						}
-
-						searchNestedBlocks( innerBlock );
-					} );
-				}
-			};
-
-			blocks.forEach( ( block ) => {
-				if ( block.name === 'cloudcatch/light-modal-block' ) {
-					data.push( block );
-				}
-
-				searchNestedBlocks( block );
-			} );
-
-			return data;
-		} );
+		const modals = useModals();
 
 		const selectedModal = modals.filter(
 			( block ) => attributes?.modalEnabled === block?.attributes?.id
@@ -87,7 +61,6 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
 						modal?.attributes?.label ||
 						__( 'New Modal', 'light-modal-block' ),
 					value: modal?.attributes?.id,
-					// value: modal?.clientId,
 				};
 			} ),
 		];

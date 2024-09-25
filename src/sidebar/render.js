@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { PluginSidebar } from '@wordpress/editor';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import {
 	Button,
@@ -8,37 +8,13 @@ import {
 	CardBody,
 	__experimentalHeading as Heading,
 } from '@wordpress/components';
-import { edit, search, trash } from '@wordpress/icons';
+import { edit, trash } from '@wordpress/icons';
 
 import { modalIcon as icon } from '../icon';
+import { useModals } from '../utils';
 
 export default function PluginSidebarTest() {
-	const modals = useSelect( ( select ) => {
-		const data = [];
-		const blocks = select( blockEditorStore ).getBlocks();
-
-		const searchNestedBlocks = ( block ) => {
-			if ( block?.innerBlocks ) {
-				block.innerBlocks.forEach( ( innerBlock ) => {
-					if ( innerBlock.name === 'cloudcatch/light-modal-block' ) {
-						data.push( innerBlock );
-					}
-
-					searchNestedBlocks( innerBlock );
-				} );
-			}
-		};
-
-		blocks.forEach( ( block ) => {
-			if ( block.name === 'cloudcatch/light-modal-block' ) {
-				data.push( block );
-			}
-
-			searchNestedBlocks( block );
-		} );
-
-		return data;
-	} );
+	const modals = useModals();
 
 	const { selectBlock, removeBlock } = useDispatch( blockEditorStore );
 

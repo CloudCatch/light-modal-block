@@ -14,6 +14,11 @@
  * @package           CloudCatch\LightModalBlock
  */
 
+/**
+ * Register the block.
+ *
+ * @return void
+ */
 function cloudcatch_light_modal_block_block_init() {
 	register_block_type( __DIR__ . '/build' );
 }

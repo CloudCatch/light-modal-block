@@ -27,11 +27,11 @@ import {
 	Path,
 	withNotices,
 } from '@wordpress/components';
-import { useSelect } from '@wordpress/data';
+import { useSelect, dispatch } from '@wordpress/data';
 import { store as editorStore } from '@wordpress/editor';
 
 import './editor.scss';
-import { generateModalId } from './utils';
+import { generateModalId, useModals } from './utils';
 
 export function Edit( props ) {
 	const { attributes, setAttributes, isSelected, clientId } = props;
@@ -46,6 +46,31 @@ export function Edit( props ) {
 		triggerSelector,
 		cookieDuration,
 	} = attributes;
+
+	const modals = useModals();
+
+	// Ensure that the modal ID is unique.
+	useEffect( () => {
+		const duplicates = modals.filter( ( obj, index, arr ) =>
+			arr.find(
+				( innerObj ) =>
+					innerObj.attributes.id === obj.attributes.id &&
+					innerObj.clientId !== obj.clientId
+			)
+		);
+
+		if ( duplicates.length <= 1 ) {
+			return;
+		}
+
+		for ( let i = 1; i < duplicates.length; i++ ) {
+			dispatch( 'core/block-editor' ).updateBlockAttributes(
+				duplicates[ i ].clientId,
+				{ id: generateModalId() }
+			);
+		}
+	}, [ clientId, modals ] );
+
 	const [ alreadyOpenedDefault, setAlreadyOpenedDefault ] = useState( false );
 
 	const colorGradientSettings = useMultipleOriginColorsAndGradients();
@@ -72,7 +97,7 @@ export function Edit( props ) {
 		if ( ! id ) {
 			setAttributes( { id: generateModalId() } );
 		}
-	}, [] );
+	}, [ id, setAttributes ] );
 
 	useEffect( () => {
 		if ( isSelected || isInnerBlockSelected ) {
