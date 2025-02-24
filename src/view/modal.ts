@@ -8,6 +8,8 @@ export default class Modal {
 
 	modalId: string;
 
+	triggers: HTMLElement[];
+
 	openTrigger: string = 'data-trigger-modal';
 
 	closeTrigger: string = 'wp-block-cloudcatch-light-modal-block__close';
@@ -23,6 +25,7 @@ export default class Modal {
 
 	constructor( { targetModal, triggers = [], cookieDuration } ) {
 		this.modalId = targetModal;
+		this.triggers = triggers;
 		this.cookieDuration = cookieDuration;
 
 		// Save a reference of the modal
@@ -78,6 +81,9 @@ export default class Modal {
 		this.modal.classList.add( this.openClass );
 		this.addEventListeners();
 		this.setFocusToFirstNode();
+
+		// Dispatch event when showing modal
+		this.modal.dispatchEvent(new CustomEvent("light-modal-block:modal-show", {bubbles: true}));
 	}
 
 	closeModal() {
@@ -93,6 +99,9 @@ export default class Modal {
 		if ( this.cookieDuration ) {
 			this.setCookie();
 		}
+
+		// Dispatch event when closing modal
+		this.modal.dispatchEvent(new CustomEvent("light-modal-block:modal-close", {bubbles: true}));
 	}
 
 	addEventListeners() {
