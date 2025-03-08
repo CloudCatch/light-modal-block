@@ -47,6 +47,7 @@ export function Edit( props ) {
 		enableTriggerDelay,
 		triggerSelector,
 		cookieDuration,
+		interactionSetsCookie,
 	} = attributes;
 
 	const modals = useModals();
@@ -142,6 +143,7 @@ export function Edit( props ) {
 		'data-trigger-delay': enableTriggerDelay ? triggerDelay : undefined,
 		'data-trigger-selector': triggerSelector || undefined,
 		'data-cookie-duration': cookieDuration || undefined,
+		'data-cookie-interaction': interactionSetsCookie || undefined,
 		'data-modal-id': id,
 	};
 
@@ -248,6 +250,23 @@ export function Edit( props ) {
 										a11yLabel: __( 'Minutes (min)' ),
 										step: 1,
 									},
+								} }
+							/>
+							<ToggleControl
+								label={ __(
+									'Interaction sets cookie',
+									'light-modal-block'
+								) }
+								checked={ interactionSetsCookie || false }
+								help={ __(
+									'Interaction with the modal such as clicking a link or submitting a form, will set the cookie, respecting the cookie duration.',
+									'light-modal-block'
+								) }
+								onChange={ () => {
+									setAttributes( {
+										interactionSetsCookie:
+											! interactionSetsCookie,
+									} );
 								} }
 							/>
 						</>

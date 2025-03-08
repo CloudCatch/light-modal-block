@@ -16,6 +16,7 @@ export default function save( props ) {
 		enableTriggerDelay,
 		triggerSelector,
 		cookieDuration,
+		interactionSetsCookie,
 	} = attributes;
 
 	const widthWithUnit = Number.isFinite( width ) ? width + '%' : width;
@@ -34,6 +35,7 @@ export default function save( props ) {
 		'data-trigger-delay': enableTriggerDelay ? triggerDelay : undefined,
 		'data-trigger-selector': triggerSelector || undefined,
 		'data-cookie-duration': cookieDuration || undefined,
+		'data-cookie-interaction': interactionSetsCookie || undefined,
 		'data-modal-id': id,
 	};
 

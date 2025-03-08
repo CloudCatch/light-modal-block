@@ -45,6 +45,9 @@
 		},
 		"cookieDuration": {
 			"type": "string"
+		},
+		"interactionSetsCookie": {
+			"type": "boolean"
 		}
 	},
 	"supports": {
