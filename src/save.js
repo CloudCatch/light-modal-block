@@ -11,6 +11,7 @@ export default function save( props ) {
 		backdropColor,
 		enableCloseButton,
 		closeIconColor,
+		closeBackgroundColor,
 		triggerDelay,
 		enableTriggerDelay,
 		triggerSelector,
@@ -46,7 +47,10 @@ export default function save( props ) {
 					} ) }
 				/>
 				{ enableCloseButton && (
-					<button className="wp-block-cloudcatch-light-modal-block__close">
+					<button
+						className="wp-block-cloudcatch-light-modal-block__close"
+						style={ { backgroundColor: closeBackgroundColor } }
+					>
 						<SVG
 							xmlns="http://www.w3.org/2000/svg"
 							width="14"

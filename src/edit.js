@@ -42,6 +42,7 @@ export function Edit( props ) {
 		backdropColor,
 		enableCloseButton,
 		closeIconColor,
+		closeBackgroundColor,
 		triggerDelay,
 		enableTriggerDelay,
 		triggerSelector,
@@ -298,6 +299,27 @@ export function Edit( props ) {
 					panelId={ clientId }
 					{ ...colorGradientSettings }
 				/>
+				<ColorGradientSettingsDropdown
+					__experimentalIsRenderedInSidebar
+					settings={ [
+						{
+							colorValue: closeBackgroundColor,
+							label: __(
+								'Close Background',
+								'light-modal-block'
+							),
+							onColorChange: ( val ) =>
+								setAttributes( { closeBackgroundColor: val } ),
+							isShownByDefault: false,
+							enableAlpha: true,
+							resetAllFilter: () => ( {
+								closeBackgroundColor: undefined,
+							} ),
+						},
+					] }
+					panelId={ clientId }
+					{ ...colorGradientSettings }
+				/>
 			</InspectorControls>
 			<div { ...wrapperBlockProps }>
 				<div { ...blockProps }>
@@ -311,6 +333,7 @@ export function Edit( props ) {
 						<button
 							className="wp-block-cloudcatch-light-modal-block__close"
 							onClick={ close }
+							style={ { backgroundColor: closeBackgroundColor } }
 						>
 							<SVG
 								xmlns="http://www.w3.org/2000/svg"

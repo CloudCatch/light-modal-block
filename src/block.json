@@ -26,6 +26,9 @@
 		"closeIconColor": {
 			"type": "string"
 		},
+		"closeBackgroundColor": {
+			"type": "string"
+		},
 		"triggerType": {
 			"type": "string",
 			"default": "click"
