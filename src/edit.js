@@ -41,6 +41,7 @@ export function Edit( props ) {
 		width,
 		backdropColor,
 		enableCloseButton,
+		closeIconColor,
 		triggerDelay,
 		enableTriggerDelay,
 		triggerSelector,
@@ -279,6 +280,24 @@ export function Edit( props ) {
 					panelId={ clientId }
 					{ ...colorGradientSettings }
 				/>
+				<ColorGradientSettingsDropdown
+					__experimentalIsRenderedInSidebar
+					settings={ [
+						{
+							colorValue: closeIconColor,
+							label: __( 'Close Icon', 'light-modal-block' ),
+							onColorChange: ( val ) =>
+								setAttributes( { closeIconColor: val } ),
+							isShownByDefault: false,
+							enableAlpha: true,
+							resetAllFilter: () => ( {
+								closeIconColor: undefined,
+							} ),
+						},
+					] }
+					panelId={ clientId }
+					{ ...colorGradientSettings }
+				/>
 			</InspectorControls>
 			<div { ...wrapperBlockProps }>
 				<div { ...blockProps }>
@@ -299,7 +318,10 @@ export function Edit( props ) {
 								height="14"
 								viewBox="0 0 24 24"
 							>
-								<Path d="M24 1.2 22.8 0 12 10.8 1.2 0 0 1.2 10.8 12 0 22.8 1.2 24 12 13.2 22.8 24l1.2-1.2L13.2 12 24 1.2z" />
+								<Path
+									d="M24 1.2 22.8 0 12 10.8 1.2 0 0 1.2 10.8 12 0 22.8 1.2 24 12 13.2 22.8 24l1.2-1.2L13.2 12 24 1.2z"
+									{ ...{ fill: closeIconColor } }
+								/>
 							</SVG>
 						</button>
 					) }

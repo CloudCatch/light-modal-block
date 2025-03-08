@@ -23,6 +23,9 @@
 			"type": "boolean",
 			"default": true
 		},
+		"closeIconColor": {
+			"type": "string"
+		},
 		"triggerType": {
 			"type": "string",
 			"default": "click"
