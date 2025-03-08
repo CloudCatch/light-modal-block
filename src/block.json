@@ -23,6 +23,12 @@
 			"type": "boolean",
 			"default": true
 		},
+		"closeIconColor": {
+			"type": "string"
+		},
+		"closeBackgroundColor": {
+			"type": "string"
+		},
 		"triggerType": {
 			"type": "string",
 			"default": "click"
