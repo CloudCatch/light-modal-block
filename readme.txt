@@ -90,11 +90,37 @@ Each modal is given a unique ID, which can be found inside the inspector control
 
 To open a modal:
 
-    window.lightModalBlocks.get('modal-id-here').showModal(true);
+```
+window.lightModalBlocks.get('modal-id-here').showModal(true);
+```
 
 To close a modal:
 
-    window.lightModalBlocks.get('modal-id-here').closeModal();
+```
+window.lightModalBlocks.get('modal-id-here').closeModal();
+```
+
+= How can I prevent focusing on the first focusable element when the modal opens? =
+
+Paste the following code in your child themes **functions.php** file or similar:
+
+```
+/**
+* Prevents the light modal block from focusing on a specific element when it opens.
+*
+* @return void
+*/
+add_action(
+	'wp_enqueue_scripts',
+	function () {
+		wp_add_inline_script(
+			'cloudcatch-light-modal-block-view-script',
+			'window.lmbFocusableElements = "";',
+			'before'
+		);
+	}
+);
+```
 
 == Screenshots ==
 
