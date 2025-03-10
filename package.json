@@ -23,15 +23,15 @@
 		"start": "wp-scripts start"
 	},
 	"devDependencies": {
-		"@wordpress/icons": "^10.5.0",
-		"@wordpress/scripts": "^28.5.0",
-		"classnames": "^2.3.2",
+		"@wordpress/icons": "^10.19.0",
+		"@wordpress/scripts": "^30.12.0",
+		"classnames": "^2.5.1",
 		"lodash": "^4.17.21",
-		"nanoid": "^4.0.2",
-		"semantic-release": "^21.0.3",
-		"semantic-release-plugin-update-version-in-files": "^1.1.0",
-		"ts-loader": "^9.4.3",
-		"typescript": "^5.0.4"
+		"nanoid": "^5.1.3",
+		"semantic-release": "^24.2.3",
+		"semantic-release-plugin-update-version-in-files": "^2.0.0",
+		"ts-loader": "^9.5.2",
+		"typescript": "^5.8.2"
 	},
 	"dependencies": {
 		"js-cookie": "^3.0.5"

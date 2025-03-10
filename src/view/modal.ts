@@ -3,6 +3,12 @@
  */
 import Cookies from 'js-cookie';
 
+declare global {
+	interface Window {
+		lmbFocusableElements?: string;
+	}
+}
+
 export default class Modal {
 	modal: HTMLElement;
 
@@ -16,14 +22,22 @@ export default class Modal {
 
 	cookieDuration: number = 0;
 
+	interactionSetsCookie: boolean = false;
+
 	activeElement: Element;
 
 	focusableElements: string =
 		'a[href],area[href],input:not([disabled]):not([type="hidden"]):not([aria-hidden]),select:not([disabled]):not([aria-hidden]),textarea:not([disabled]):not([aria-hidden]),button:not([disabled]):not([aria-hidden]),iframe,object,embed,[contenteditable],[tabindex]:not([tabindex^="-"])';
 
-	constructor( { targetModal, triggers = [], cookieDuration } ) {
+	constructor( {
+		targetModal,
+		triggers = [],
+		cookieDuration,
+		interactionSetsCookie = false,
+	} ) {
 		this.modalId = targetModal;
 		this.cookieDuration = cookieDuration;
+		this.interactionSetsCookie = interactionSetsCookie;
 
 		// Save a reference of the modal
 		this.modal = document.querySelector(
@@ -31,15 +45,19 @@ export default class Modal {
 		);
 
 		// Register click events only if pre binding eventListeners
-		if ( triggers.length > 0 ) this.registerTriggers( ...triggers );
+		if ( triggers.length > 0 ) {
+			this.registerTriggers( ...triggers );
+		}
 
 		this.modal.removeAttribute( 'data-trigger-delay' );
 		this.modal.removeAttribute( 'data-trigger-selector' );
 		this.modal.removeAttribute( 'data-cookie-duration' );
+		this.modal.removeAttribute( 'data-cookie-interaction' );
 
 		// pre bind functions for event listeners
 		this.onClick = this.onClick.bind( this );
 		this.onKeydown = this.onKeydown.bind( this );
+		this.onSubmit = this.onSubmit.bind( this );
 	}
 
 	/**
@@ -50,9 +68,7 @@ export default class Modal {
 	 */
 	registerTriggers( ...triggers ) {
 		triggers.filter( Boolean ).forEach( ( trigger ) => {
-			trigger.addEventListener( 'click', ( event ) =>
-				this.showModal( true )
-			);
+			trigger.addEventListener( 'click', () => this.showModal( true ) );
 		} );
 	}
 
@@ -76,6 +92,7 @@ export default class Modal {
 
 		this.activeElement = document.activeElement;
 		this.modal.classList.add( this.openClass );
+		document.body.classList.add( 'lmb-open' );
 		this.addEventListeners();
 		this.setFocusToFirstNode();
 	}
@@ -89,6 +106,7 @@ export default class Modal {
 		}
 
 		modal.classList.remove( this.openClass );
+		document.body.classList.remove( 'lmb-open' );
 
 		if ( this.cookieDuration ) {
 			this.setCookie();
@@ -98,12 +116,14 @@ export default class Modal {
 	addEventListeners() {
 		this.modal.addEventListener( 'touchstart', this.onClick );
 		this.modal.addEventListener( 'click', this.onClick );
+		this.modal.addEventListener( 'submit', this.onSubmit );
 		document.addEventListener( 'keydown', this.onKeydown );
 	}
 
 	removeEventListeners() {
 		this.modal.removeEventListener( 'touchstart', this.onClick );
 		this.modal.removeEventListener( 'click', this.onClick );
+		this.modal.removeEventListener( 'submit', this.onSubmit );
 		document.removeEventListener( 'keydown', this.onKeydown );
 	}
 
@@ -117,18 +137,44 @@ export default class Modal {
 		) {
 			event.preventDefault();
 			event.stopPropagation();
-			this.closeModal( event );
+			this.closeModal();
+		} else if ( this.interactionSetsCookie ) {
+			if (
+				event.target.tagName === 'A' ||
+				event.target.tagName === 'BUTTON'
+			) {
+				this.setCookie();
+			}
 		}
 	}
 
 	onKeydown( event ) {
-		if ( event.keyCode === 27 ) this.closeModal( event ); // esc
-		if ( event.keyCode === 9 ) this.retainFocus( event ); // tab
+		if ( event.keyCode === 27 ) {
+			this.closeModal();
+		} // esc
+		if ( event.keyCode === 9 ) {
+			this.retainFocus( event );
+		} // tab
+	}
+
+	onSubmit() {
+		if ( this.interactionSetsCookie ) {
+			this.setCookie();
+		}
 	}
 
 	getFocusableNodes() {
-		const nodes = this.modal.querySelectorAll( this.focusableElements );
-		return Array( ...nodes );
+		const focusableNodes =
+			typeof window.lmbFocusableElements !== 'undefined'
+				? window.lmbFocusableElements
+				: this.focusableElements;
+
+		if ( ! focusableNodes ) {
+			return [];
+		}
+
+		const nodes = this.modal.querySelectorAll( focusableNodes );
+		return Array.from( nodes );
 	}
 
 	/**
@@ -139,7 +185,9 @@ export default class Modal {
 		const focusableNodes = this.getFocusableNodes();
 
 		// no focusable nodes
-		if ( focusableNodes.length === 0 ) return;
+		if ( focusableNodes.length === 0 ) {
+			return;
+		}
 
 		// remove nodes on whose click, the modal closes
 		// could not think of a better name :(
@@ -149,17 +197,21 @@ export default class Modal {
 			}
 		);
 
-		if ( nodesWhichAreNotCloseTargets.length > 0 )
+		if ( nodesWhichAreNotCloseTargets.length > 0 ) {
 			nodesWhichAreNotCloseTargets[ 0 ].focus();
-		if ( nodesWhichAreNotCloseTargets.length === 0 )
+		}
+		if ( nodesWhichAreNotCloseTargets.length === 0 ) {
 			focusableNodes[ 0 ].focus();
+		}
 	}
 
 	retainFocus( event ) {
 		let focusableNodes = this.getFocusableNodes();
 
 		// no focusable nodes
-		if ( focusableNodes.length === 0 ) return;
+		if ( focusableNodes.length === 0 ) {
+			return;
+		}
 
 		/**
 		 * Filters nodes which are hidden to prevent

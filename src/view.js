@@ -20,6 +20,9 @@ window.addEventListener( 'DOMContentLoaded', () => {
 		);
 		const modalCookieDuration =
 			parseInt( modal.getAttribute( 'data-cookie-duration' ) ) || 0;
+		const interactionSetsCookie =
+			( modal.getAttribute( 'data-cookie-interaction' ) || false ) ===
+			'true';
 
 		const options = Object.assign(
 			{},
@@ -36,6 +39,7 @@ window.addEventListener( 'DOMContentLoaded', () => {
 		options.targetModal = modalId;
 		options.triggers = triggers;
 		options.cookieDuration = modalCookieDuration;
+		options.interactionSetsCookie = interactionSetsCookie;
 
 		window.lightModalBlocks.set( modalId, new Modal( options ) );
 

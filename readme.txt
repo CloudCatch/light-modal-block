@@ -6,7 +6,7 @@ Stable tag:        0.0.0-development
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP:      7.0
-Requires at least: 6.2
+Requires at least: 6.6
 Donate link:       https://www.buymeacoffee.com/dkjensen
 
 Lightweight, customizable modal block for the WordPress block editor
@@ -22,6 +22,7 @@ A simple yet robust solution for creating modals within the WordPress block edit
 * Trigger modal on click for any element via CSS selector
 * Trigger modal on page load after X milliseconds
   * Set cookie to not show modal again on page load until X minutes have elapsed
+  * Option for user interaction within modal triggers cookie to be set
 * Custom modal width
 * Optional close button
 * API enabled
@@ -34,6 +35,15 @@ A simple yet robust solution for creating modals within the WordPress block edit
 The Light Modal block uses a modified version of the [Micromodal](https://github.com/Ghosh/micromodal) library.
 
 == Changelog ==
+
+= 1.5.0 =
+
+* Enhancement: Add body class `.lmb-open` when a modal is currently open on the page
+* Enhancement: Add ability to set cookie on timed modals when user interacts with content in the modal
+* Enhancement: Close icon / close background color controls
+* Enhancement: Add ability to change/remove focusable elements when a modal is opened
+* Chore: Update block to block version 3
+* Chore: Update minimum WordPress version support to 6.6
 
 = 1.4.0 =
 
@@ -90,11 +100,47 @@ Each modal is given a unique ID, which can be found inside the inspector control
 
 To open a modal:
 
-    window.lightModalBlocks.get('modal-id-here').showModal(true);
+```
+window.lightModalBlocks.get('modal-id-here').showModal(true);
+```
 
 To close a modal:
 
-    window.lightModalBlocks.get('modal-id-here').closeModal();
+```
+window.lightModalBlocks.get('modal-id-here').closeModal();
+```
+
+= How can I prevent focusing on the first focusable element when the modal opens? =
+
+Paste the following code in your child themes **functions.php** file or similar:
+
+```
+/**
+* Prevents the light modal block from focusing on a specific element when it opens.
+*
+* @return void
+*/
+add_action(
+	'wp_enqueue_scripts',
+	function () {
+		wp_add_inline_script(
+			'cloudcatch-light-modal-block-view-script',
+			'window.lmbFocusableElements = "";',
+			'before'
+		);
+	}
+);
+```
+
+= How can I prevent scrolling when a modal is open? =
+
+The class `lmb-open` is added to the `<body>` of the page when a modal is open. You can use the following CSS to prevent scrolling?
+
+```
+.lmb-open {
+	overflow: hidden;
+}
+```
 
 == Screenshots ==
 

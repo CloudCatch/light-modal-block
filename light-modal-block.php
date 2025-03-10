@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Light Modal Block
  * Description:       Lightweight, customizable modal block for the WordPress block editor
- * Requires at least: 6.2
+ * Requires at least: 6.6
  * Requires PHP:      7.0
  * Version:           0.0.0-development
  * Author:            CloudCatch LLC
