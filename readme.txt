@@ -6,7 +6,7 @@ Stable tag:        0.0.0-development
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP:      7.0
-Requires at least: 6.2
+Requires at least: 6.6
 Donate link:       https://www.buymeacoffee.com/dkjensen
 
 Lightweight, customizable modal block for the WordPress block editor

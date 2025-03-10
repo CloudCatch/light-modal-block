@@ -1,6 +1,6 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "cloudcatch/light-modal-block",
 	"version": "0.0.0-development",
 	"title": "Light Modal Block",

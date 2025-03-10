@@ -3,6 +3,12 @@
  */
 import Cookies from 'js-cookie';
 
+declare global {
+	interface Window {
+		lmbFocusableElements?: string;
+	}
+}
+
 export default class Modal {
 	modal: HTMLElement;
 
@@ -156,8 +162,17 @@ export default class Modal {
 	}
 
 	getFocusableNodes() {
-		const nodes = this.modal.querySelectorAll( this.focusableElements );
-		return Array( ...nodes );
+		const focusableNodes =
+			typeof window.lmbFocusableElements !== 'undefined'
+				? window.lmbFocusableElements
+				: this.focusableElements;
+
+		if ( ! focusableNodes ) {
+			return [];
+		}
+
+		const nodes = this.modal.querySelectorAll( focusableNodes );
+		return Array.from( nodes );
 	}
 
 	/**
