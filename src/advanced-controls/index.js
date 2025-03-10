@@ -74,7 +74,7 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
 				<BlockEdit { ...props } />
 				{ name !== 'cloudcatch/light-modal-block' && (
 					<InspectorAdvancedControls>
-						<BaseControl>
+						<BaseControl __nextHasNoMarginBottom>
 							<ToggleControl
 								label={ __(
 									'Show Modal on Click',
@@ -91,6 +91,7 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
 										),
 									} );
 								} }
+								__nextHasNoMarginBottom
 							/>
 							{ attributes?.modalTriggerEnabled && (
 								<SelectControl
@@ -102,6 +103,7 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
 											modalEnabled: val,
 										} );
 									} }
+									__nextHasNoMarginBottom
 								/>
 							) }
 							{ selectedModal != null && (

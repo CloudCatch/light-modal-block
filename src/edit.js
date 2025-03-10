@@ -167,6 +167,7 @@ export function Edit( props ) {
 							'Used to differentiate modals from one another',
 							'light-modal-block'
 						) }
+						__nextHasNoMarginBottom
 					/>
 					<UnitControl
 						label={ __( 'Width' ) }
@@ -188,6 +189,7 @@ export function Edit( props ) {
 								enableCloseButton: ! enableCloseButton,
 							} );
 						} }
+						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 				<PanelBody title={ __( 'Triggers', 'light-modal-block' ) }>
@@ -202,6 +204,7 @@ export function Edit( props ) {
 								enableTriggerDelay: ! enableTriggerDelay,
 							} );
 						} }
+						__nextHasNoMarginBottom
 					/>
 					{ enableTriggerDelay && (
 						<>
@@ -268,6 +271,7 @@ export function Edit( props ) {
 											! interactionSetsCookie,
 									} );
 								} }
+								__nextHasNoMarginBottom
 							/>
 						</>
 					) }
@@ -278,6 +282,7 @@ export function Edit( props ) {
 							setAttributes( { triggerSelector: val } )
 						}
 						style={ { fontFamily: 'monospace' } }
+						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 			</InspectorControls>
