@@ -313,7 +313,7 @@ export function Edit( props ) {
 							label: __( 'Close Icon', 'light-modal-block' ),
 							onColorChange: ( val ) =>
 								setAttributes( { closeIconColor: val } ),
-							isShownByDefault: false,
+							isShownByDefault: true,
 							enableAlpha: true,
 							resetAllFilter: () => ( {
 								closeIconColor: undefined,
@@ -334,7 +334,7 @@ export function Edit( props ) {
 							),
 							onColorChange: ( val ) =>
 								setAttributes( { closeBackgroundColor: val } ),
-							isShownByDefault: false,
+							isShownByDefault: true,
 							enableAlpha: true,
 							resetAllFilter: () => ( {
 								closeBackgroundColor: undefined,
