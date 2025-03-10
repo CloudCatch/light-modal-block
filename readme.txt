@@ -122,6 +122,16 @@ add_action(
 );
 ```
 
+= How can I prevent scrolling when a modal is open? =
+
+The class `lmb-open` is added to the `<body>` of the page when a modal is open. You can use the following CSS to prevent scrolling?
+
+```
+.lmb-open {
+	overflow: hidden;
+}
+```
+
 == Screenshots ==
 
 1. Block editor modal settings

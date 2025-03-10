@@ -92,6 +92,7 @@ export default class Modal {
 
 		this.activeElement = document.activeElement;
 		this.modal.classList.add( this.openClass );
+		document.body.classList.add( 'lmb-open' );
 		this.addEventListeners();
 		this.setFocusToFirstNode();
 	}
@@ -105,6 +106,7 @@ export default class Modal {
 		}
 
 		modal.classList.remove( this.openClass );
+		document.body.classList.remove( 'lmb-open' );
 
 		if ( this.cookieDuration ) {
 			this.setCookie();
