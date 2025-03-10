@@ -22,6 +22,7 @@ A simple yet robust solution for creating modals within the WordPress block edit
 * Trigger modal on click for any element via CSS selector
 * Trigger modal on page load after X milliseconds
   * Set cookie to not show modal again on page load until X minutes have elapsed
+  * Option for user interaction within modal triggers cookie to be set
 * Custom modal width
 * Optional close button
 * API enabled
@@ -34,6 +35,15 @@ A simple yet robust solution for creating modals within the WordPress block edit
 The Light Modal block uses a modified version of the [Micromodal](https://github.com/Ghosh/micromodal) library.
 
 == Changelog ==
+
+= 1.5.0 =
+
+* Enhancement: Add body class `.lmb-open` when a modal is currently open on the page
+* Enhancement: Add ability to set cookie on timed modals when user interacts with content in the modal
+* Enhancement: Close icon / close background color controls
+* Enhancement: Add ability to change/remove focusable elements when a modal is opened
+* Chore: Update block to block version 3
+* Chore: Update minimum WordPress version support to 6.6
 
 = 1.4.0 =
 
