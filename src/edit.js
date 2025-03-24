@@ -41,10 +41,13 @@ export function Edit( props ) {
 		width,
 		backdropColor,
 		enableCloseButton,
+		closeIconColor,
+		closeBackgroundColor,
 		triggerDelay,
 		enableTriggerDelay,
 		triggerSelector,
 		cookieDuration,
+		interactionSetsCookie,
 	} = attributes;
 
 	const modals = useModals();
@@ -140,6 +143,7 @@ export function Edit( props ) {
 		'data-trigger-delay': enableTriggerDelay ? triggerDelay : undefined,
 		'data-trigger-selector': triggerSelector || undefined,
 		'data-cookie-duration': cookieDuration || undefined,
+		'data-cookie-interaction': interactionSetsCookie || undefined,
 		'data-modal-id': id,
 	};
 
@@ -163,6 +167,7 @@ export function Edit( props ) {
 							'Used to differentiate modals from one another',
 							'light-modal-block'
 						) }
+						__nextHasNoMarginBottom
 					/>
 					<UnitControl
 						label={ __( 'Width' ) }
@@ -184,6 +189,7 @@ export function Edit( props ) {
 								enableCloseButton: ! enableCloseButton,
 							} );
 						} }
+						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 				<PanelBody title={ __( 'Triggers', 'light-modal-block' ) }>
@@ -198,6 +204,7 @@ export function Edit( props ) {
 								enableTriggerDelay: ! enableTriggerDelay,
 							} );
 						} }
+						__nextHasNoMarginBottom
 					/>
 					{ enableTriggerDelay && (
 						<>
@@ -248,6 +255,24 @@ export function Edit( props ) {
 									},
 								} }
 							/>
+							<ToggleControl
+								label={ __(
+									'Interaction sets cookie',
+									'light-modal-block'
+								) }
+								checked={ interactionSetsCookie || false }
+								help={ __(
+									'Interaction with the modal such as clicking a link or submitting a form, will set the cookie, respecting the cookie duration.',
+									'light-modal-block'
+								) }
+								onChange={ () => {
+									setAttributes( {
+										interactionSetsCookie:
+											! interactionSetsCookie,
+									} );
+								} }
+								__nextHasNoMarginBottom
+							/>
 						</>
 					) }
 					<TextControl
@@ -257,6 +282,7 @@ export function Edit( props ) {
 							setAttributes( { triggerSelector: val } )
 						}
 						style={ { fontFamily: 'monospace' } }
+						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 			</InspectorControls>
@@ -279,6 +305,45 @@ export function Edit( props ) {
 					panelId={ clientId }
 					{ ...colorGradientSettings }
 				/>
+				<ColorGradientSettingsDropdown
+					__experimentalIsRenderedInSidebar
+					settings={ [
+						{
+							colorValue: closeIconColor,
+							label: __( 'Close Icon', 'light-modal-block' ),
+							onColorChange: ( val ) =>
+								setAttributes( { closeIconColor: val } ),
+							isShownByDefault: true,
+							enableAlpha: true,
+							resetAllFilter: () => ( {
+								closeIconColor: undefined,
+							} ),
+						},
+					] }
+					panelId={ clientId }
+					{ ...colorGradientSettings }
+				/>
+				<ColorGradientSettingsDropdown
+					__experimentalIsRenderedInSidebar
+					settings={ [
+						{
+							colorValue: closeBackgroundColor,
+							label: __(
+								'Close Background',
+								'light-modal-block'
+							),
+							onColorChange: ( val ) =>
+								setAttributes( { closeBackgroundColor: val } ),
+							isShownByDefault: true,
+							enableAlpha: true,
+							resetAllFilter: () => ( {
+								closeBackgroundColor: undefined,
+							} ),
+						},
+					] }
+					panelId={ clientId }
+					{ ...colorGradientSettings }
+				/>
 			</InspectorControls>
 			<div { ...wrapperBlockProps }>
 				<div { ...blockProps }>
@@ -292,6 +357,7 @@ export function Edit( props ) {
 						<button
 							className="wp-block-cloudcatch-light-modal-block__close"
 							onClick={ close }
+							style={ { backgroundColor: closeBackgroundColor } }
 						>
 							<SVG
 								xmlns="http://www.w3.org/2000/svg"
@@ -299,7 +365,10 @@ export function Edit( props ) {
 								height="14"
 								viewBox="0 0 24 24"
 							>
-								<Path d="M24 1.2 22.8 0 12 10.8 1.2 0 0 1.2 10.8 12 0 22.8 1.2 24 12 13.2 22.8 24l1.2-1.2L13.2 12 24 1.2z" />
+								<Path
+									d="M24 1.2 22.8 0 12 10.8 1.2 0 0 1.2 10.8 12 0 22.8 1.2 24 12 13.2 22.8 24l1.2-1.2L13.2 12 24 1.2z"
+									{ ...{ fill: closeIconColor } }
+								/>
 							</SVG>
 						</button>
 					) }

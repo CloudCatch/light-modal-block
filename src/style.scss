@@ -37,6 +37,7 @@
 			align-items: center;
 			justify-content: center;
 			max-width: none !important;
+			margin: 0;
 		}
 	}
 
@@ -54,7 +55,7 @@
 		line-height: 0;
 		top: 8px;
 		right: 8px;
-		padding: 0.75em;
+		padding: 0.75rem;
 		margin: 0;
 		cursor: pointer;
 		z-index: 10001;
