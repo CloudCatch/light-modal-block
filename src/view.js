@@ -50,4 +50,7 @@ window.addEventListener( 'DOMContentLoaded', () => {
 			);
 		}
 	} );
+
+	// Dispatch event when done
+	document.dispatchEvent(new CustomEvent("light-modal-block:ready"));
 } );
