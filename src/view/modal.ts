@@ -100,7 +100,9 @@ export default class Modal {
 		this.setFocusToFirstNode();
 
 		// Dispatch event when showing modal
-		this.modal.dispatchEvent(new CustomEvent("light-modal-block:modal-show", {bubbles: true}));
+		this.modal.dispatchEvent(
+			new CustomEvent( 'light-modal-block:modal-show', { bubbles: true } )
+		);
 	}
 
 	closeModal() {
@@ -119,7 +121,11 @@ export default class Modal {
 		}
 
 		// Dispatch event when closing modal
-		this.modal.dispatchEvent(new CustomEvent("light-modal-block:modal-close", {bubbles: true}));
+		this.modal.dispatchEvent(
+			new CustomEvent( 'light-modal-block:modal-close', {
+				bubbles: true,
+			} )
+		);
 	}
 
 	addEventListeners() {
