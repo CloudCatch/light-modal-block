@@ -36,6 +36,10 @@ The Light Modal block uses a modified version of the [Micromodal](https://github
 
 == Changelog ==
 
+= 1.6.0 =
+
+* Enhancement: Add event listeners for modal ready, open and close
+
 = 1.5.0 =
 
 * Enhancement: Add body class `.lmb-open` when a modal is currently open on the page
