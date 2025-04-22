@@ -77,3 +77,30 @@ function cloudcatch_light_modal_block_post_template( $block_content, $block, $in
 	return $block_content;
 }
 add_filter( 'render_block_core/post-template', 'cloudcatch_light_modal_block_post_template', 10, 3 );
+
+/**
+ * Accessibility improvements for buttons that trigger modals to allow keyboard navigation.
+ *
+ * @param string $block_content The block content.
+ * @return string
+ */
+function cloudcatch_light_modal_block_accessible_buttons( $block_content ) {
+	$tags = new WP_HTML_Tag_Processor( $block_content );
+
+	$has_modal = (bool) ( $tags->next_tag() && $tags->get_attribute( 'data-trigger-modal' ) );
+
+	if ( ! $has_modal ) {
+		return $block_content;
+	}
+
+	while ( $tags->next_tag( array( 'class_name' => 'wp-block-button__link' ) ) ) {
+		$tags->set_attribute( 'role', 'button' );
+
+		if ( ! $tags->get_attribute( 'tabindex' ) ) {
+			$tags->set_attribute( 'tabindex', '0' );
+		}
+	}
+
+	return $tags->get_updated_html();
+}
+add_filter( 'render_block_core/button', 'cloudcatch_light_modal_block_accessible_buttons' );
