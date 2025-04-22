@@ -20,6 +20,8 @@ export default class Modal {
 
 	closeTrigger: string = 'wp-block-cloudcatch-light-modal-block__close';
 
+	private triggeringDebounce: boolean = false;
+
 	openClass: string = 'is-open';
 
 	cookieDuration: number = 0;
@@ -71,7 +73,28 @@ export default class Modal {
 	 */
 	registerTriggers( ...triggers ) {
 		triggers.filter( Boolean ).forEach( ( trigger ) => {
-			trigger.addEventListener( 'click', () => this.showModal( true ) );
+			const debouncedShow = () => {
+				if ( this.triggeringDebounce ) {
+					return;
+				}
+
+				this.triggeringDebounce = true;
+
+				this.showModal( true );
+
+				setTimeout( () => {
+					this.triggeringDebounce = false;
+				}, 100 );
+			};
+
+			trigger.addEventListener( 'click', debouncedShow );
+
+			trigger.addEventListener( 'keydown', ( event ) => {
+				if ( event.keyCode === 13 || event.keyCode === 32 ) {
+					event.preventDefault();
+					debouncedShow();
+				}
+			} );
 		} );
 	}
 

@@ -33,6 +33,9 @@ window.addEventListener( 'DOMContentLoaded', () => {
 			...document.querySelectorAll(
 				`[${ options.openTrigger }="${ modalId }"]`
 			),
+			...document.querySelectorAll(
+				`[${ options.openTrigger }="${ modalId }"] > .wp-block-button__link`
+			),
 			...document.querySelectorAll( `${ modalSelector }` ),
 		];
 
