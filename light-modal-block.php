@@ -93,7 +93,12 @@ function cloudcatch_light_modal_block_accessible_buttons( $block_content ) {
 		return $block_content;
 	}
 
-	while ( $tags->next_tag( array( 'tag_name' => 'A', 'class_name' => 'wp-block-button__link' ) ) ) {
+	while ( $tags->next_tag(
+		array(
+			'tag_name'   => 'A',
+			'class_name' => 'wp-block-button__link',
+		)
+	) ) {
 		$tags->set_attribute( 'role', 'button' );
 
 		if ( ! $tags->get_attribute( 'tabindex' ) ) {
