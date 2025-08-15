@@ -79,7 +79,8 @@ function cloudcatch_light_modal_block_post_template( $block_content, $block, $in
 add_filter( 'render_block_core/post-template', 'cloudcatch_light_modal_block_post_template', 10, 3 );
 
 /**
- * Accessibility improvements for buttons that trigger modals to allow keyboard navigation.
+ * Accessibility improvements for buttons that trigger modals by changing
+ * the element from an anchor tag to a button tag.
  *
  * @param string $block_content The block content.
  * @return string
@@ -93,19 +94,10 @@ function cloudcatch_light_modal_block_accessible_buttons( $block_content ) {
 		return $block_content;
 	}
 
-	while ( $tags->next_tag(
-		array(
-			'tag_name'   => 'A',
-			'class_name' => 'wp-block-button__link',
-		)
-	) ) {
-		$tags->set_attribute( 'role', 'button' );
+	// Replace <a> with <button> if it has a modal trigger.
+	$block_content = str_replace( '<a ', '<button ', $block_content );
+	$block_content = str_replace( '</a>', '</button>', $block_content );
 
-		if ( ! $tags->get_attribute( 'tabindex' ) ) {
-			$tags->set_attribute( 'tabindex', '0' );
-		}
-	}
-
-	return $tags->get_updated_html();
+	return $block_content;
 }
 add_filter( 'render_block_core/button', 'cloudcatch_light_modal_block_accessible_buttons' );

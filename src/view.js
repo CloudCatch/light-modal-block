@@ -1,7 +1,8 @@
 /**
  * Internal dependencies
  */
-import Modal from './view/modal';
+import Modal from './view/modal.ts';
+import { resolvePreferredTriggerElement } from './utils.js';
 
 window.addEventListener( 'DOMContentLoaded', () => {
 	'use strict';
@@ -15,42 +16,30 @@ window.addEventListener( 'DOMContentLoaded', () => {
 	modals.forEach( ( modal ) => {
 		const modalId = modal.getAttribute( 'data-modal-id' );
 		const modalSelector = modal.getAttribute( 'data-trigger-selector' );
-		const modalDelay = parseInt(
-			modal.getAttribute( 'data-trigger-delay' )
-		);
-		const modalCookieDuration =
-			parseInt( modal.getAttribute( 'data-cookie-duration' ) ) || 0;
+		const modalDelay = parseInt( modal.getAttribute( 'data-trigger-delay' ) );
+		const modalCookieDuration = parseInt( modal.getAttribute( 'data-cookie-duration' ) ) || 0;
 		const interactionSetsCookie =
-			( modal.getAttribute( 'data-cookie-interaction' ) || false ) ===
-			'true';
+		( modal.getAttribute( 'data-cookie-interaction' ) || false ) === 'true';
 
-		const options = Object.assign(
-			{},
-			{ openTrigger: 'data-trigger-modal' }
-		);
+		const options = Object.assign( {}, { openTrigger: 'data-trigger-modal' } );
 
-		const triggers = [
-			...document.querySelectorAll(
-				`[${ options.openTrigger }="${ modalId }"]`
-			),
-			...document.querySelectorAll(
-				`[${ options.openTrigger }="${ modalId }"] > .wp-block-button__link`
-			),
-			...document.querySelectorAll( `${ modalSelector }` ),
+		const containerSelectors = [
+			`[${ options.openTrigger }="${ modalId }"]`,
+			...( modalSelector ? [ modalSelector ] : [] ),
 		];
+		const containers = containerSelectors.flatMap( ( sel ) => [ ...document.querySelectorAll( sel ) ] );
+		const triggers = containers.map( resolvePreferredTriggerElement );
+		const uniqueTriggers = Array.from( new Set( triggers ) );
 
 		options.targetModal = modalId;
-		options.triggers = triggers;
+		options.triggers = uniqueTriggers;
 		options.cookieDuration = modalCookieDuration;
 		options.interactionSetsCookie = interactionSetsCookie;
 
 		window.lightModalBlocks.set( modalId, new Modal( options ) );
 
 		if ( null !== modalDelay && ! isNaN( modalDelay ) ) {
-			setTimeout(
-				() => window.lightModalBlocks.get( modalId ).showModal(),
-				modalDelay
-			);
+			setTimeout( () => window.lightModalBlocks.get( modalId ).showModal(), modalDelay );
 		}
 	} );
 

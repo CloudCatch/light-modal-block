@@ -45,9 +45,7 @@ export default class Modal {
 		this.interactionSetsCookie = interactionSetsCookie;
 
 		// Save a reference of the modal
-		this.modal = document.querySelector(
-			`[data-modal-id="${ this.modalId }"]`
-		);
+		this.modal = document.querySelector( `[data-modal-id="${ this.modalId }"]` );
 
 		// Register click events only if pre binding eventListeners
 		if ( triggers.length > 0 ) {
@@ -100,7 +98,7 @@ export default class Modal {
 
 	setCookie() {
 		const exp = new Date(
-			new Date().getTime() + this.cookieDuration * 60 * 1000
+			new Date().getTime() + ( this.cookieDuration * 60 * 1000 ),
 		);
 		Cookies.set( 'wordpress_lmb_' + this.modalId, '1', {
 			expires: exp,
@@ -124,7 +122,7 @@ export default class Modal {
 
 		// Dispatch event when showing modal
 		this.modal.dispatchEvent(
-			new CustomEvent( 'light-modal-block:modal-show', { bubbles: true } )
+			new CustomEvent( 'light-modal-block:modal-show', { bubbles: true } ),
 		);
 	}
 
@@ -147,7 +145,7 @@ export default class Modal {
 		this.modal.dispatchEvent(
 			new CustomEvent( 'light-modal-block:modal-close', {
 				bubbles: true,
-			} )
+			} ),
 		);
 	}
 
@@ -170,17 +168,14 @@ export default class Modal {
 			event.target.classList.contains( this.closeTrigger ) ||
 			event.target.parentNode.classList.contains( this.closeTrigger ) ||
 			event.target.classList.contains(
-				'wp-block-cloudcatch-light-modal-block__wrapper'
+				'wp-block-cloudcatch-light-modal-block__wrapper',
 			)
 		) {
 			event.preventDefault();
 			event.stopPropagation();
 			this.closeModal();
 		} else if ( this.interactionSetsCookie ) {
-			if (
-				event.target.tagName === 'A' ||
-				event.target.tagName === 'BUTTON'
-			) {
+			if ( event.target.tagName === 'A' || event.target.tagName === 'BUTTON' ) {
 				this.setCookie();
 			}
 		}
@@ -229,11 +224,9 @@ export default class Modal {
 
 		// remove nodes on whose click, the modal closes
 		// could not think of a better name :(
-		const nodesWhichAreNotCloseTargets = focusableNodes.filter(
-			( node ) => {
-				return ! node.classList.contains( this.closeTrigger );
-			}
-		);
+		const nodesWhichAreNotCloseTargets = focusableNodes.filter( ( node ) => {
+			return ! node.classList.contains( this.closeTrigger );
+		} );
 
 		if ( nodesWhichAreNotCloseTargets.length > 0 ) {
 			nodesWhichAreNotCloseTargets[ 0 ].focus();
@@ -259,9 +252,7 @@ export default class Modal {
 			return node.offsetParent !== null;
 		} );
 
-		const focusedItemIndex = focusableNodes.indexOf(
-			document.activeElement
-		);
+		const focusedItemIndex = focusableNodes.indexOf( document.activeElement );
 
 		if ( event.shiftKey && focusedItemIndex === 0 ) {
 			focusableNodes[ focusableNodes.length - 1 ].focus();
