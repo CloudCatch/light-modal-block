@@ -16,6 +16,5 @@
     "css.validate": false,
     "less.validate": false,
     "scss.validate": false,
-    "stylelint.configFile": "node_modules/@wordpress/scripts/config/.stylelintrc.json",
-    "phpsab.standard": "/home/ubuntu/phpcs.xml"
+    "stylelint.configFile": "node_modules/@wordpress/scripts/config/.stylelintrc.json"
 }
