@@ -114,7 +114,7 @@ export default class Modal {
 			return;
 		}
 
-		this.activeElement = document.activeElement;
+		this.activeElement = this.modal.ownerDocument.activeElement;
 		this.modal.classList.add( this.openClass );
 		document.body.classList.add( 'lmb-open' );
 		this.addEventListeners();
@@ -252,7 +252,7 @@ export default class Modal {
 			return node.offsetParent !== null;
 		} );
 
-		const focusedItemIndex = focusableNodes.indexOf( document.activeElement );
+		const focusedItemIndex = focusableNodes.indexOf( this.modal.ownerDocument.activeElement );
 
 		if ( event.shiftKey && focusedItemIndex === 0 ) {
 			focusableNodes[ focusableNodes.length - 1 ].focus();

@@ -4,5 +4,12 @@
 		"@wordpress/no-unsafe-wp-apis": 0,
 		"no-console": "off",
 		"eqeqeq": "off"
+	},
+	"env": {
+		"browser": true,
+		"es2021": true
+  	},
+	"globals": {
+		"lmbFocusableElements": "readonly"
 	}
 }
