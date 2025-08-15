@@ -9,7 +9,6 @@ import {
 import {
 	BaseControl,
 	ToggleControl,
-	TextControl,
 	SelectControl,
 	Button,
 } from '@wordpress/components';
@@ -110,22 +109,20 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
 								/>
 							) }
 							{ selectedModal != null && (
-								<>
-									<BaseControl __nextHasNoMarginBottom>
-										<Button
-											label={ __(
-												'Edit Modal',
-												'light-modal-block'
-											) }
-											variant="secondary"
-											onClick={ () =>
-												selectBlock( selectedModal.clientId )
-											}
-										>
-											{ __( 'Open Modal', 'light-modal-block' ) }
-										</Button>
-									</BaseControl>
-								</>
+								<BaseControl __nextHasNoMarginBottom>
+									<Button
+										label={ __(
+											'Edit Modal',
+											'light-modal-block'
+										) }
+										variant="secondary"
+										onClick={ () =>
+											selectBlock( selectedModal.clientId )
+										}
+									>
+										{ __( 'Open Modal', 'light-modal-block' ) }
+									</Button>
+								</BaseControl>
 							) }
 						</BaseControl>
 					</InspectorAdvancedControls>
