@@ -12,6 +12,7 @@ import {
 	SelectControl,
 	Button,
 } from '@wordpress/components';
+
 import { useModals } from '../utils';
 
 const ALLOWED_BLOCKS = [
@@ -104,21 +105,24 @@ const withAdvancedControls = createHigherOrderComponent( ( BlockEdit ) => {
 										} );
 									} }
 									__nextHasNoMarginBottom
+									__next40pxDefaultSize
 								/>
 							) }
 							{ selectedModal != null && (
-								<Button
-									label={ __(
-										'Edit Modal',
-										'light-modal-block'
-									) }
-									variant="secondary"
-									onClick={ () =>
-										selectBlock( selectedModal.clientId )
-									}
-								>
-									{ __( 'Open Modal', 'light-modal-block' ) }
-								</Button>
+								<BaseControl __nextHasNoMarginBottom>
+									<Button
+										label={ __(
+											'Edit Modal',
+											'light-modal-block'
+										) }
+										variant="secondary"
+										onClick={ () =>
+											selectBlock( selectedModal.clientId )
+										}
+									>
+										{ __( 'Open Modal', 'light-modal-block' ) }
+									</Button>
+								</BaseControl>
 							) }
 						</BaseControl>
 					</InspectorAdvancedControls>
