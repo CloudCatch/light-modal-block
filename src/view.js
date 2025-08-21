@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import Modal from './view/modal.ts';
-import { resolvePreferredTriggerElement } from './utils.js';
+import { resolvePreferredTriggerElement } from './helpers.js';
 
 window.addEventListener( 'DOMContentLoaded', () => {
 	'use strict';
