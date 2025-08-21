@@ -36,6 +36,9 @@ The Light Modal block uses a modified version of the [Micromodal](https://github
 
 == Changelog ==
 
+= 1.7.1 =
+* Fix: Unnecessary block editor scripts being enqueued on frontend
+
 = 1.7.0 =
 
 * Enhancement: Improve acessibility of modal triggers for the Button block
