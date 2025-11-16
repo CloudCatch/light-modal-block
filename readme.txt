@@ -1,7 +1,7 @@
 === Light Modal Block ===
 Contributors:      cloudcatch, dkjensen
 Tags:              block, modal, popup, lightbox, gutenberg, full-site-editing
-Tested up to:      6.8
+Tested up to:      6.9
 Stable tag:        0.0.0-development
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
