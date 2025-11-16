@@ -16,7 +16,8 @@ window.addEventListener( 'DOMContentLoaded', () => {
 	modals.forEach( ( modal ) => {
 		const modalId = modal.getAttribute( 'data-modal-id' );
 		const modalSelector = modal.getAttribute( 'data-trigger-selector' );
-		const modalDelay = parseInt( modal.getAttribute( 'data-trigger-delay' ) );
+		const modalDelayAttr = modal.getAttribute( 'data-trigger-delay' );
+		const modalDelay = modalDelayAttr !== null ? parseInt( modalDelayAttr ) || 0 : null;
 		const modalCookieDuration = parseInt( modal.getAttribute( 'data-cookie-duration' ) ) || 0;
 		const interactionSetsCookie =
 		( modal.getAttribute( 'data-cookie-interaction' ) || false ) === 'true';
@@ -41,7 +42,7 @@ window.addEventListener( 'DOMContentLoaded', () => {
 
 		window.lightModalBlocks.set( modalId, new Modal( options ) );
 
-		if ( null !== modalDelay && ! isNaN( modalDelay ) ) {
+		if ( null !== modalDelay ) {
 			setTimeout( () => window.lightModalBlocks.get( modalId ).showModal(), modalDelay );
 		}
 	} );
