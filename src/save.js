@@ -17,6 +17,7 @@ export default function save( props ) {
 		triggerSelector,
 		cookieDuration,
 		interactionSetsCookie,
+		autoplayMedia,
 	} = attributes;
 
 	const widthWithUnit = Number.isFinite( width ) ? width + '%' : width;
@@ -36,6 +37,7 @@ export default function save( props ) {
 		'data-trigger-selector': triggerSelector || undefined,
 		'data-cookie-duration': cookieDuration || undefined,
 		'data-cookie-interaction': interactionSetsCookie || undefined,
+		'data-autoplay-media': autoplayMedia || undefined,
 		'data-modal-id': id,
 	};
 

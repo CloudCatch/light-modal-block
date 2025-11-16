@@ -48,6 +48,10 @@
 		},
 		"interactionSetsCookie": {
 			"type": "boolean"
+		},
+		"autoplayMedia": {
+			"type": "boolean",
+			"default": false
 		}
 	},
 	"supports": {

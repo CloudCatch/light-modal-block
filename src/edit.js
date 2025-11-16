@@ -52,6 +52,7 @@ export function Edit( props ) {
 		triggerSelector,
 		cookieDuration,
 		interactionSetsCookie,
+		autoplayMedia,
 	} = attributes;
 
 	const modals = useModals();
@@ -148,6 +149,7 @@ export function Edit( props ) {
 		'data-trigger-selector': triggerSelector || undefined,
 		'data-cookie-duration': cookieDuration || undefined,
 		'data-cookie-interaction': interactionSetsCookie || undefined,
+		'data-autoplay-media': autoplayMedia || undefined,
 		'data-modal-id': id,
 	};
 
@@ -313,6 +315,31 @@ export function Edit( props ) {
 							setAttributes( { triggerSelector: val } )
 						}
 						style={ { fontFamily: 'monospace' } }
+						help={ __(
+							'CSS selector for additional trigger elements that will open this modal when clicked.',
+							'light-modal-block'
+						) }
+						placeholder={ __(
+							'.my-button, #my-link',
+							'light-modal-block'
+						) }
+						__nextHasNoMarginBottom
+					/>
+					<ToggleControl
+						label={ __(
+							'Autoplay media when modal opens',
+							'light-modal-block'
+						) }
+						checked={ autoplayMedia || false }
+						help={ __(
+							'Note: Most browsers require a user action before this can run, so it may not work for modals that open automatically on page load.',
+							'light-modal-block'
+						) }
+						onChange={ () => {
+							setAttributes( {
+								autoplayMedia: ! autoplayMedia,
+							} );
+						} }
 						__nextHasNoMarginBottom
 					/>
 				</PanelBody>

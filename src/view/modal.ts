@@ -28,6 +28,8 @@ export default class Modal {
 
 	interactionSetsCookie: boolean = false;
 
+	autoplayMedia: boolean = false;
+
 	activeElement: Element;
 
 	focusableElements: string =
@@ -38,11 +40,13 @@ export default class Modal {
 		triggers = [],
 		cookieDuration,
 		interactionSetsCookie = false,
+		autoplayMedia = false,
 	} ) {
 		this.modalId = targetModal;
 		this.triggers = triggers;
 		this.cookieDuration = cookieDuration;
 		this.interactionSetsCookie = interactionSetsCookie;
+		this.autoplayMedia = autoplayMedia;
 
 		// Save a reference of the modal
 		this.modal = document.querySelector( `[data-modal-id="${ this.modalId }"]` );
@@ -61,6 +65,9 @@ export default class Modal {
 		this.onClick = this.onClick.bind( this );
 		this.onKeydown = this.onKeydown.bind( this );
 		this.onSubmit = this.onSubmit.bind( this );
+
+		// Prepare YouTube iframes for API control
+		this.prepareYouTubeIframes();
 	}
 
 	/**
@@ -120,6 +127,14 @@ export default class Modal {
 		this.addEventListeners();
 		this.setFocusToFirstNode();
 
+		// Autoplay media if enabled
+		if ( this.autoplayMedia ) {
+			// Small delay to ensure iframes are ready
+			setTimeout( () => {
+				this.playVideos();
+			}, 100 );
+		}
+
 		// Dispatch event when showing modal
 		this.modal.dispatchEvent(
 			new CustomEvent( 'light-modal-block:modal-show', { bubbles: true } ),
@@ -136,6 +151,9 @@ export default class Modal {
 
 		modal.classList.remove( this.openClass );
 		document.body.classList.remove( 'lmb-open' );
+
+		// Pause all videos when modal closes
+		this.pauseVideos();
 
 		if ( this.cookieDuration ) {
 			this.setCookie();
@@ -267,5 +285,142 @@ export default class Modal {
 			focusableNodes[ 0 ].focus();
 			event.preventDefault();
 		}
+	}
+
+	/**
+	 * Pauses all videos in the modal
+	 * Handles HTML5 video elements and iframe embeds (YouTube, Vimeo, etc.)
+	 */
+	pauseVideos() {
+		// Pause HTML5 video elements
+		const videoElements = this.modal.querySelectorAll( 'video' );
+		videoElements.forEach( ( video: HTMLVideoElement ) => {
+			if ( ! video.paused ) {
+				video.pause();
+			}
+		} );
+
+		// Pause HTML5 audio elements
+		const audioElements = this.modal.querySelectorAll( 'audio' );
+		audioElements.forEach( ( audio: HTMLAudioElement ) => {
+			if ( ! audio.paused ) {
+				audio.pause();
+			}
+		} );
+
+		// Pause iframe embeds (YouTube, Vimeo, etc.)
+		const iframes = this.modal.querySelectorAll( 'iframe' );
+		iframes.forEach( ( iframe: HTMLIFrameElement ) => {
+			const src = iframe.src;
+
+			// YouTube iframes
+			if ( src.includes( 'youtube.com' ) || src.includes( 'youtu.be' ) ) {
+				// Enable API if not already enabled
+				if ( ! src.includes( 'enablejsapi=1' ) ) {
+					const separator = src.includes( '?' ) ? '&' : '?';
+					iframe.src = src + separator + 'enablejsapi=1';
+				}
+
+				// Send pause command
+				iframe.contentWindow?.postMessage(
+					'{"event":"command","func":"pauseVideo","args":""}',
+					'*'
+				);
+			}
+
+			// Vimeo iframes
+			if ( src.includes( 'vimeo.com' ) ) {
+				iframe.contentWindow?.postMessage(
+					'{"method":"pause"}',
+					'*'
+				);
+			}
+
+			// For other embeds, stop by reloading the iframe
+			if ( ! src.includes( 'youtube.com' ) &&
+				! src.includes( 'youtu.be' ) &&
+				! src.includes( 'vimeo.com' ) ) {
+				const currentSrc = iframe.src;
+				iframe.src = '';
+				iframe.src = currentSrc;
+			}
+		} );
+	}
+
+	/**
+	 * Prepares YouTube iframes for API control
+	 * Must be called before trying to control playback
+	 */
+	prepareYouTubeIframes() {
+		const iframes = this.modal.querySelectorAll( 'iframe' );
+		iframes.forEach( ( iframe: HTMLIFrameElement ) => {
+			const src = iframe.src;
+
+			if ( src && ( src.includes( 'youtube.com' ) || src.includes( 'youtu.be' ) ) ) {
+				if ( ! src.includes( 'enablejsapi=1' ) ) {
+					const separator = src.includes( '?' ) ? '&' : '?';
+					iframe.src = src + separator + 'enablejsapi=1';
+				}
+			}
+		} );
+	}
+
+	/**
+	 * Plays all videos in the modal
+	 * Handles HTML5 video elements and iframe embeds (YouTube, Vimeo, etc.)
+	 */
+	playVideos() {
+		// Play HTML5 video elements
+		const videoElements = this.modal.querySelectorAll( 'video' );
+		videoElements.forEach( ( video: HTMLVideoElement ) => {
+			video.play().catch( () => {
+				// Autoplay was prevented, ignore the error
+			} );
+		} );
+
+		// Play HTML5 audio elements
+		const audioElements = this.modal.querySelectorAll( 'audio' );
+		audioElements.forEach( ( audio: HTMLAudioElement ) => {
+			audio.play().catch( () => {
+				// Autoplay was prevented, ignore the error
+			} );
+		} );
+
+		// Play iframe embeds (YouTube, Vimeo, etc.)
+		const iframes = this.modal.querySelectorAll( 'iframe' );
+		iframes.forEach( ( iframe: HTMLIFrameElement ) => {
+			const src = iframe.src;
+
+			// YouTube iframes
+			if ( src.includes( 'youtube.com' ) || src.includes( 'youtu.be' ) ) {
+				// Mute first to allow autoplay
+				iframe.contentWindow?.postMessage(
+					'{"event":"command","func":"mute","args":""}',
+					'*'
+				);
+
+				// Play the video
+				iframe.contentWindow?.postMessage(
+					'{"event":"command","func":"playVideo","args":""}',
+					'*'
+				);
+
+				// Unmute after a short delay to ensure playback has started
+				setTimeout( () => {
+					iframe.contentWindow?.postMessage(
+						'{"event":"command","func":"unMute","args":""}',
+						'*'
+					);
+				}, 500 );
+			}
+
+			// Vimeo iframes
+			if ( src.includes( 'vimeo.com' ) ) {
+				iframe.contentWindow?.postMessage(
+					'{"method":"play"}',
+					'*'
+				);
+			}
+		} );
 	}
 }

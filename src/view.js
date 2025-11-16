@@ -20,6 +20,8 @@ window.addEventListener( 'DOMContentLoaded', () => {
 		const modalCookieDuration = parseInt( modal.getAttribute( 'data-cookie-duration' ) ) || 0;
 		const interactionSetsCookie =
 		( modal.getAttribute( 'data-cookie-interaction' ) || false ) === 'true';
+		const autoplayMedia =
+		( modal.getAttribute( 'data-autoplay-media' ) || false ) === 'true';
 
 		const options = Object.assign( {}, { openTrigger: 'data-trigger-modal' } );
 
@@ -35,6 +37,7 @@ window.addEventListener( 'DOMContentLoaded', () => {
 		options.triggers = uniqueTriggers;
 		options.cookieDuration = modalCookieDuration;
 		options.interactionSetsCookie = interactionSetsCookie;
+		options.autoplayMedia = autoplayMedia;
 
 		window.lightModalBlocks.set( modalId, new Modal( options ) );
 
