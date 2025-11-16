@@ -25,6 +25,10 @@ import {
 	__experimentalUnitControl as UnitControl,
 	SVG,
 	Path,
+	Button,
+	Flex,
+	FlexBlock,
+	FlexItem,
 	withNotices,
 } from '@wordpress/components';
 import { useSelect, dispatch } from '@wordpress/data';
@@ -151,11 +155,38 @@ export function Edit( props ) {
 		<>
 			<InspectorControls>
 				<PanelBody>
-					<p className="wp-block-cloudcatch-light-modal-block__editor-id">
-						{ __( 'Modal ID', 'light-modal-block' ) }
-						{ ': ' }
-						<code>{ id }</code>
-					</p>
+					<Flex align="center" gap={ 2 } style={ { marginBlockEnd: '12px' } }>
+						<FlexBlock>
+							<p
+								className="wp-block-cloudcatch-light-modal-block__editor-id"
+								style={ { margin: 0 } }
+							>
+								{ __( 'Modal ID', 'light-modal-block' ) }
+								{ ': ' }
+								<code>{ id }</code>
+							</p>
+						</FlexBlock>
+						<FlexItem>
+							<Button
+								icon="update"
+								label={ __( 'Regenerate ID', 'light-modal-block' ) }
+								onClick={ () => {
+									if (
+										// eslint-disable-next-line no-alert
+										window.confirm(
+											__(
+												'Are you sure you want to regenerate the Modal ID? This will break any existing links to this modal.',
+												'light-modal-block'
+											)
+										)
+									) {
+										setAttributes( { id: generateModalId() } );
+									}
+								} }
+								size="small"
+							/>
+						</FlexItem>
+					</Flex>
 					<TextControl
 						label={ __( 'Modal Label', 'light-modal-block' ) }
 						value={ label }
