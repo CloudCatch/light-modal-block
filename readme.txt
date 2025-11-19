@@ -36,6 +36,10 @@ The Light Modal block uses a modified version of the [Micromodal](https://github
 
 == Changelog ==
 
+= 1.8.0 =
+* Fix: Show modal on page load no longer requiring delay input
+* Enhancement: Control over autoplaying of videos and audio when a modal opens as well as pausing when it closes
+
 = 1.7.1 =
 * Fix: Unnecessary block editor scripts being enqueued on frontend
 
