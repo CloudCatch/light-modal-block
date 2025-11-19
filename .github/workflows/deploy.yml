@@ -10,7 +10,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
 
       - name: Check if secrets exist
         env:
@@ -25,10 +30,10 @@ jobs:
 
       - name: Semantic release
         id: semantic
-        uses: cycjimmy/semantic-release-action@v2
+        uses: cycjimmy/semantic-release-action@v6
         with:
-          semantic_version: 17
-          branches: | 
+          semantic_version: 25
+          branches: |
             ['master']
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
