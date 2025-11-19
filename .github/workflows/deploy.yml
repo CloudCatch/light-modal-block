@@ -59,7 +59,7 @@ jobs:
       - name: WordPress Plugin Deploy
         id: deploy
         if: steps.semantic.outputs.new_release_published == 'true'
-        uses: 10up/action-wordpress-plugin-deploy@1.5.0
+        uses: 10up/action-wordpress-plugin-deploy@stable
         env:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
