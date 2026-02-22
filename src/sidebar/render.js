@@ -8,13 +8,15 @@ import {
 	Card,
 	CardBody,
 	__experimentalHeading as Heading,
+	__experimentalVStack as VStack,
+	PanelBody,
 } from '@wordpress/components';
 import { pencil, trash } from '@wordpress/icons';
 
 import { modalIcon as icon } from '../icon';
 import { useModals } from '../utils';
 
-export default function PluginSidebarTest() {
+export default function ModalsPluginSidebar() {
 	const modals = useModals();
 
 	const { selectBlock, removeBlock } = useDispatch( blockEditorStore );
@@ -26,8 +28,9 @@ export default function PluginSidebarTest() {
 			title={ __( 'Modals', 'light-modal-block' ) }
 			icon={ icon }
 		>
-			<div className="plugin-sidebar-content">
-				{ modals.length > 0 &&
+			<PanelBody className="plugin-sidebar-content">
+				<VStack spacing={ 3 }>
+					{ modals.length > 0 &&
 					modals.map( ( modal, key ) => (
 						<div key={ key }>
 							<Card className="light-modal-block__card">
@@ -60,25 +63,27 @@ export default function PluginSidebarTest() {
 											onClick={ () =>
 												removeBlock( modal.clientId )
 											}
+											isDestructive
 										/>
 									</div>
 								</CardBody>
 							</Card>
 						</div>
 					) ) }
-				{ modals.length < 1 && (
-					<Card isBorderless={ true }>
-						<CardBody>
-							<p>
-								{ __(
-									'There are no modals on this page',
-									'light-modal-block'
-								) }
-							</p>
-						</CardBody>
-					</Card>
-				) }
-			</div>
+					{ modals.length < 1 && (
+						<Card isBorderless={ true }>
+							<CardBody>
+								<p>
+									{ __(
+										'There are no modals on this page',
+										'light-modal-block'
+									) }
+								</p>
+							</CardBody>
+						</Card>
+					) }
+				</VStack>
+			</PanelBody>
 		</PluginSidebar>
 	);
 }

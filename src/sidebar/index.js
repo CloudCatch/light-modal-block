@@ -1,5 +1,5 @@
 import { registerPlugin } from '@wordpress/plugins';
 
-import PluginSidebarTest from './render';
+import ModalsPluginSidebar from './render';
 
-registerPlugin( 'light-modal-block', { render: PluginSidebarTest } );
+registerPlugin( 'light-modal-block', { render: ModalsPluginSidebar } );
