@@ -14,29 +14,7 @@ export const generateModalId = () => {
 
 export const useModals = () => {
 	return useSelect( ( select ) => {
-		const data = [];
-		const blocks = select( blockEditorStore ).getBlocks();
-
-		const searchNestedBlocks = ( block ) => {
-			if ( block?.innerBlocks ) {
-				block.innerBlocks.forEach( ( innerBlock ) => {
-					if ( innerBlock.name === 'cloudcatch/light-modal-block' ) {
-						data.push( innerBlock );
-					}
-
-					searchNestedBlocks( innerBlock );
-				} );
-			}
-		};
-
-		blocks.forEach( ( block ) => {
-			if ( block.name === 'cloudcatch/light-modal-block' ) {
-				data.push( block );
-			}
-
-			searchNestedBlocks( block );
-		} );
-
-		return data;
+		const { getBlocksByName, getBlock } = select( blockEditorStore );
+		return getBlocksByName( 'cloudcatch/light-modal-block' ).map( getBlock );
 	} );
 };
