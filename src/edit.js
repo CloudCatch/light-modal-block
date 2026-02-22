@@ -201,6 +201,7 @@ export function Edit( props ) {
 							'light-modal-block'
 						) }
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 					/>
 					<UnitControl
 						label={ __( 'Width' ) }
@@ -213,6 +214,7 @@ export function Edit( props ) {
 							setAttributes( { width: nextWidth } );
 						} }
 						units={ units }
+						__next40pxDefaultSize
 					/>
 					<ToggleControl
 						label={ __( 'Show close button', 'light-modal-block' ) }
@@ -324,6 +326,7 @@ export function Edit( props ) {
 							'light-modal-block'
 						) }
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 					/>
 					<ToggleControl
 						label={ __(
