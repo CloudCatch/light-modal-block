@@ -14,7 +14,8 @@
 			"type": "string"
 		},
 		"label": {
-			"type": "string"
+			"type": "string",
+			"default": ""
 		},
 		"backdropColor": {
 			"type": "string"
@@ -41,7 +42,8 @@
 			"type": "string"
 		},
 		"triggerSelector": {
-			"type": "string"
+			"type": "string",
+			"default": ""
 		},
 		"cookieDuration": {
 			"type": "string"
