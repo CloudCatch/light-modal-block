@@ -1,5 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { PluginSidebar } from '@wordpress/editor';
+import { store as editorStore } from '@wordpress/edit-post';
 import { useDispatch } from '@wordpress/data';
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import {
@@ -8,7 +9,7 @@ import {
 	CardBody,
 	__experimentalHeading as Heading,
 } from '@wordpress/components';
-import { edit, trash } from '@wordpress/icons';
+import { pencil, trash } from '@wordpress/icons';
 
 import { modalIcon as icon } from '../icon';
 import { useModals } from '../utils';
@@ -17,6 +18,7 @@ export default function PluginSidebarTest() {
 	const modals = useModals();
 
 	const { selectBlock, removeBlock } = useDispatch( blockEditorStore );
+	const { openGeneralSidebar } = useDispatch( editorStore );
 
 	return (
 		<PluginSidebar
@@ -39,14 +41,15 @@ export default function PluginSidebarTest() {
 									</Heading>
 									<div>
 										<Button
-											icon={ edit }
+											icon={ pencil }
 											label={ __(
 												'Edit Modal',
 												'light-modal-block'
 											) }
-											onClick={ () =>
-												selectBlock( modal.clientId )
-											}
+											onClick={ async () => {
+												await selectBlock( modal.clientId );
+												openGeneralSidebar( 'edit-post/block' );
+											} }
 										/>
 										<Button
 											icon={ trash }
