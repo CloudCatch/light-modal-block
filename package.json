@@ -20,19 +20,20 @@
 		"lint:js": "wp-scripts lint-js",
 		"packages-update": "wp-scripts packages-update",
 		"plugin-zip": "bash ./bin/build-zip.sh",
-		"start": "wp-scripts start"
+		"start": "wp-scripts start",
+		"test": "wp-scripts test-unit-js"
 	},
 	"devDependencies": {
-		"@wordpress/icons": "^11.7.0",
-		"@wordpress/scripts": "^31.5.0",
+		"@wordpress/icons": "^15.0.0",
+		"@wordpress/scripts": "^32.5.0",
 		"classnames": "^2.5.1",
-		"nanoid": "^5.1.5",
-		"semantic-release": "^25.0.3",
-		"semantic-release-plugin-update-version-in-files": "^2.0.1",
-		"ts-loader": "^9.5.4",
-		"typescript": "^5.9.3"
+		"nanoid": "^5.1.15",
+		"semantic-release": "^25.0.5",
+		"semantic-release-plugin-update-version-in-files": "^2.1.0",
+		"ts-loader": "^9.6.2",
+		"typescript": "^6.0.3"
 	},
 	"dependencies": {
-		"js-cookie": "^3.0.5"
+		"js-cookie": "^3.0.8"
 	}
 }

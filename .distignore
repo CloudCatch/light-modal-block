@@ -60,3 +60,5 @@ tsconfig.json
 webpack.config.js
 webpack.gutenberg.config.js
 webpack.mix.js
+
+*.test.js
