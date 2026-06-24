@@ -4,7 +4,7 @@
 import Modal from './view/modal.ts';
 import { resolvePreferredTriggerElement } from './helpers.js';
 
-window.addEventListener( 'DOMContentLoaded', () => {
+function initLightModalBlocks() {
 	'use strict';
 
 	window.lightModalBlocks = new Map();
@@ -49,4 +49,12 @@ window.addEventListener( 'DOMContentLoaded', () => {
 
 	// Dispatch event when done
 	document.dispatchEvent( new CustomEvent( 'light-modal-block:ready' ) );
-} );
+}
+
+export { initLightModalBlocks };
+
+if ( document.readyState === 'loading' ) {
+	window.addEventListener( 'DOMContentLoaded', initLightModalBlocks );
+} else {
+	initLightModalBlocks();
+}
