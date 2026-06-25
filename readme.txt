@@ -36,6 +36,9 @@ The Light Modal block uses a modified version of the [Micromodal](https://github
 
 == Changelog ==
 
+= 1.9.2 =
+* Fix: Prevent page scrolling when clicking an anchor which triggers opening a modal
+
 = 1.9.1 =
 * Fix: Modal not opening on some sites due to the script loading after the page was already ready
 
