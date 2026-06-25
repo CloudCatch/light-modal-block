@@ -78,9 +78,16 @@ export default class Modal {
 	 */
 	registerTriggers( ...triggers ) {
 		triggers.filter( Boolean ).forEach( ( trigger ) => {
-			const debouncedShow = () => {
+			const debouncedShow = ( event?: Event ) => {
 				if ( this.triggeringDebounce ) {
 					return;
+				}
+
+				if (
+					event &&
+					this.shouldPreventTriggerDefault( event, trigger )
+				) {
+					event.preventDefault();
 				}
 
 				this.triggeringDebounce = true;
@@ -97,10 +104,39 @@ export default class Modal {
 			trigger.addEventListener( 'keydown', ( event ) => {
 				if ( event.keyCode === 13 || event.keyCode === 32 ) {
 					event.preventDefault();
-					debouncedShow();
+					debouncedShow( event );
 				}
 			} );
 		} );
+	}
+
+	/**
+	 * Whether to prevent the browser default for a trigger activation.
+	 * Anchor triggers commonly use href="#" which scrolls the page to the top.
+	 * Modified or non-primary clicks are left alone so links can still open in
+	 * a new tab/window when the user expects that behavior.
+	 */
+	shouldPreventTriggerDefault( event: Event, trigger: HTMLElement ): boolean {
+		if ( trigger.tagName !== 'A' ) {
+			return false;
+		}
+
+		if ( event instanceof MouseEvent ) {
+			if ( event.button !== 0 ) {
+				return false;
+			}
+
+			if (
+				event.metaKey ||
+				event.ctrlKey ||
+				event.shiftKey ||
+				event.altKey
+			) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	setCookie() {
@@ -247,10 +283,10 @@ export default class Modal {
 		} );
 
 		if ( nodesWhichAreNotCloseTargets.length > 0 ) {
-			nodesWhichAreNotCloseTargets[ 0 ].focus();
+			this.focusElement( nodesWhichAreNotCloseTargets[ 0 ], true );
 		}
 		if ( nodesWhichAreNotCloseTargets.length === 0 ) {
-			focusableNodes[ 0 ].focus();
+			this.focusElement( focusableNodes[ 0 ], true );
 		}
 	}
 
@@ -273,7 +309,7 @@ export default class Modal {
 		const focusedItemIndex = focusableNodes.indexOf( this.modal.ownerDocument.activeElement );
 
 		if ( event.shiftKey && focusedItemIndex === 0 ) {
-			focusableNodes[ focusableNodes.length - 1 ].focus();
+			this.focusElement( focusableNodes[ focusableNodes.length - 1 ] );
 			event.preventDefault();
 		}
 
@@ -282,8 +318,24 @@ export default class Modal {
 			focusableNodes.length > 0 &&
 			focusedItemIndex === focusableNodes.length - 1
 		) {
-			focusableNodes[ 0 ].focus();
+			this.focusElement( focusableNodes[ 0 ] );
 			event.preventDefault();
+		}
+	}
+
+	focusElement( element: Element, preventScroll: boolean = false ) {
+		if ( ! element || typeof ( element as HTMLElement ).focus !== 'function' ) {
+			return;
+		}
+
+		const focusable = element as HTMLElement;
+
+		try {
+			focusable.focus(
+				preventScroll ? { preventScroll: true } : undefined,
+			);
+		} catch {
+			focusable.focus();
 		}
 	}
 

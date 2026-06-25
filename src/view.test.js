@@ -76,6 +76,65 @@ describe( 'initLightModalBlocks', () => {
 		expect( wrapper.classList.contains( 'is-open' ) ).toBe( true );
 	} );
 
+	it( 'opens modal from a CSS selector anchor without scrolling via hash navigation', () => {
+		const modalId = 'modal-anchor';
+		const wrapper = createModalElement( {
+			modalId,
+			triggerSelector: '.test a',
+		} );
+
+		const container = document.createElement( 'div' );
+		container.className = 'test';
+		const link = document.createElement( 'a' );
+		link.href = '#';
+		link.textContent = 'Open modal';
+		container.appendChild( link );
+		document.body.appendChild( container );
+
+		initLightModalBlocks();
+
+		const event = new MouseEvent( 'click', {
+			bubbles: true,
+			cancelable: true,
+			button: 0,
+		} );
+		const preventDefault = jest.spyOn( event, 'preventDefault' );
+
+		link.dispatchEvent( event );
+
+		expect( wrapper.classList.contains( 'is-open' ) ).toBe( true );
+		expect( preventDefault ).toHaveBeenCalled();
+	} );
+
+	it( 'does not prevent default for modified anchor trigger clicks', () => {
+		const modalId = 'modal-anchor-modified';
+		createModalElement( {
+			modalId,
+			triggerSelector: '.test-modified a',
+		} );
+
+		const container = document.createElement( 'div' );
+		container.className = 'test-modified';
+		const link = document.createElement( 'a' );
+		link.href = 'https://example.com';
+		container.appendChild( link );
+		document.body.appendChild( container );
+
+		initLightModalBlocks();
+
+		const event = new MouseEvent( 'click', {
+			bubbles: true,
+			cancelable: true,
+			button: 0,
+			ctrlKey: true,
+		} );
+		const preventDefault = jest.spyOn( event, 'preventDefault' );
+
+		link.dispatchEvent( event );
+
+		expect( preventDefault ).not.toHaveBeenCalled();
+	} );
+
 	it( 'closes modal when close button is clicked', () => {
 		const modalId = 'modal-close';
 		const wrapper = createModalElement( { modalId } );
