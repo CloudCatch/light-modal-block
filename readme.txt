@@ -38,6 +38,7 @@ The Light Modal block uses a modified version of the [Micromodal](https://github
 
 = 1.10.0 =
 * Enhancement: Modals inside the WooCommerce Product Template open the product that was clicked, instead of always showing the first product
+* Fix: Close button reliably closes the modal when clicking the icon inside the button
 
 = 1.9.2 =
 * Fix: Prevent page scrolling when clicking an anchor which triggers opening a modal

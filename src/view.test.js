@@ -149,6 +149,31 @@ describe( 'initLightModalBlocks', () => {
 		expect( wrapper.classList.contains( 'is-open' ) ).toBe( false );
 	} );
 
+	it( 'closes modal when the close icon SVG is clicked', () => {
+		const modalId = 'modal-close-svg';
+		const wrapper = createModalElement( { modalId } );
+		const closeBtn = document.createElement( 'button' );
+		closeBtn.classList.add( 'wp-block-cloudcatch-light-modal-block__close' );
+		const svg = document.createElementNS(
+			'http://www.w3.org/2000/svg',
+			'svg'
+		);
+		const path = document.createElementNS(
+			'http://www.w3.org/2000/svg',
+			'path'
+		);
+		svg.appendChild( path );
+		closeBtn.appendChild( svg );
+		wrapper.appendChild( closeBtn );
+		createTriggerButton( modalId );
+		initLightModalBlocks();
+		window.lightModalBlocks.get( modalId ).showModal( true );
+		path.dispatchEvent(
+			new MouseEvent( 'click', { bubbles: true, cancelable: true } )
+		);
+		expect( wrapper.classList.contains( 'is-open' ) ).toBe( false );
+	} );
+
 	it( 'opens modal automatically when trigger delay is 0', () => {
 		jest.useFakeTimers();
 		const modalId = 'modal-delay';

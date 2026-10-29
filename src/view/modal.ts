@@ -218,10 +218,15 @@ export default class Modal {
 	}
 
 	onClick( event ) {
+		const target = event.target;
+
+		if ( ! ( target instanceof Element ) ) {
+			return;
+		}
+
 		if (
-			event.target.classList.contains( this.closeTrigger ) ||
-			event.target.parentNode.classList.contains( this.closeTrigger ) ||
-			event.target.classList.contains(
+			target.closest( `.${ this.closeTrigger }` ) ||
+			target.classList.contains(
 				'wp-block-cloudcatch-light-modal-block__wrapper',
 			)
 		) {
